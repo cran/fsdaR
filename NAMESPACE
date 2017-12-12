@@ -1,0 +1,39 @@
+# Export all names
+## exportPattern("^[[:alpha:]]+")
+
+export(fsreg,
+    FSR_control, FSReda_control, Sreg_control, Sregeda_control, MMreg_control, MMregeda_control, LXS_control,
+    resfwdplot, mdrplot, levfwdplot)
+##    resfwdplot, mdrplot, resindexplot, levfwdplot, checkRuntime)
+
+importFrom("stats", "pf", "printCoefmat", "pt", "quantile")
+
+# Import all packages listed as Imports or Depends
+importFrom(stats4, plot, summary)
+importFrom(methods, show)
+importFrom("stats", ".getXlevels", "coef", "is.empty.model",
+         "model.matrix", "model.offset", "model.response",
+         "model.weights")
+import(
+  robustbase,
+  rJava
+)
+
+##S3 methods
+S3method(fsreg, default)
+S3method(fsreg, formula)
+S3method(print, fsr)
+S3method(print, fsreda)
+S3method(print, fsdalms)
+S3method(print, fsdalts)
+S3method(print, sreg)
+S3method(print, sregeda)
+S3method(print, mmreg)
+S3method(print, mmregeda)
+S3method(print, summary.fsr)
+S3method(print, summary.fsdalms)
+S3method(print, summary.fsdalts)
+S3method(summary, fsr)
+S3method(summary, fsdalms)
+S3method(summary, fsdalts)
+

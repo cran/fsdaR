@@ -1,0 +1,66 @@
+2017-12-11  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.2-20
+    * DESCRIPTION (Version): 0.2-19
+    * DESCRIPTION (Version): 0.2-18
+    *   first version for CRAN
+    *
+2017-11-26  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.2-17
+    *
+    *
+    * man\fsreda.object.Rd, sregeda.object.Rd, mmregeda.object.Rd,
+    *   fsdalts.object.Rd, fsdalms.object.Rd
+    *   levfwdplot
+
+    * DESCRIPTION (Version): 0.2-16
+    *
+    * R\resindexplot.R, levfwdplot.R
+    * man\fsr.object.Rd, sreg.object.Rd, mmreg.object.Rd
+    * man\resfwdplot.Rd, mdrplot.Rd
+    *
+
+2017-11-14  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.2-13
+    *
+    *
+    * DESCRIPTION (Version): 0.2-12
+    *
+
+2017-10-20  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.2-11
+    * R\* add resfwdplot(), mdrplot() and Sregeda()
+    *
+    * DESCRIPTION (Version): 0.2-10
+    *
+    * R\* add LXS
+    *
+    * DESCRIPTION (Version): 0.2-9
+    *
+    * man\* added help for print.*, summary.fsr, print.summary.fsr
+    * R\internal.R - fixed a bug in list2MatlabStruct()
+    * R\XXX_control - restored the argument plot=FALSE. In this way, plots can be used,
+    *   until we have implemented plot functions for fsr, sreg and mmreg, etc.
+    *
+    * DESCRIPTION (Version): 0.2-8
+    * DESCRIPTION (Version): 0.2-4
+    * DESCRIPTION (Version): 0.2-3
+    *   - with Sreg.control and summary.fsreg and print.summary.fsreg
+    *
+    * DESCRIPTION (Version): 0.2-2
+    *   - from Emmanuele
+    * DESCRIPTION (Version): 0.2-0
+    *
+    *
+
+2016-11-30  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.1-0
+    *
+    * Created
+
+
+
