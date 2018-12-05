@@ -259,6 +259,7 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
           fvNames = names(fitted.values);
         }
         names(residuals) <- fvNames <- names(weights) <- rownames(x)
+
         ans = list(call=match.call(), outliers=outliers, coefficients=beta, scale=scale, auxscale=auxscale, intercept=intercept,
             residuals=residuals, weights=weights, y=y, X=x)
         if (!is.null(fitted.values)) {

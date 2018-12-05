@@ -88,7 +88,7 @@ resfwdplot(out,
   \item{fg.labstep}{
     numeric vector which specifies the steps of the search where to put labels for 
     the highlighted trajectories (units). The default is to put the labels at the 
-    initial and final steps of the search. \code{flabstep=''} means no label.
+    initial and final steps of the search. \code{fg.labstep=''} means no label.
 }
   \item{fg.lwd}{
  The line width for the highlighted trajectories (units). Default is 1.
@@ -228,8 +228,6 @@ resfwdplot(out,
     added to those previously brushed. It is possible, every time a new brushing is 
     done, to use a different color for the brushed units. If \code{persist='off'} 
     every time a new brush is performed units previously brushed are removed.
-    \item bivarfit. This option adds one or more least square lines based on 
-        SIMPLE REGRESSION to the plots of y|X, depending on the selected groups.
     \item{bivarfit}{Wheather to superimpose bivariate least square lines on the plot (if \code{plot=TRUE}.
         This option adds one or more least squares lines, based on SIMPLE REGRESSION of y on Xi, 
         to the plots of y|Xi. The default is \code{bivarfit=FALSE}: no line is fitted. 

@@ -124,35 +124,50 @@ LXS_control <- function(intercept=TRUE, lms, h, bdp, nsamp, rew=FALSE,
     structure(ctrl, class = "LTSreg_control")
 }
 
-.defaultControl <- function(monitoring=FALSE, family = c("homo", "hetero", "bayes"), method = c("FS", "S", "MM", "LTS", "LMS"))
+.defaultControl <- function(monitoring=FALSE, family = c("homo", "hetero", "bayes", "mult"), method = c("FS", "S", "MM", "LTS", "LMS"))
 {
     family <- match.arg(family)
     method <- match.arg(method)
 
     res <- NULL
-    if(method=="FS")
+    if(family == "mult")
     {
-        if(family=="homo")
-            res <- if(!monitoring) FSR_control() else FSReda_control()
+
+##        if(method=="FS")
+##        {
+##                res <- if(!monitoring) FSM_control() else FSMeda_control()
+##        } else if(method=="S")
+##                res <- if(!monitoring) Smult_control() else Smulteda_control()
+##        else if(method=="MM")
+##                res <- if(!monitoring) MMmult_control() else MMmulteda_control()
+##        else
+##            stop(paste("Undefined method: ", method))
+
+    } else
+    {
+        if(method=="FS")
+        {
+            if(family=="homo")
+                res <- if(!monitoring) FSR_control() else FSReda_control()
+            else
+                stop("Families 'hetero' and 'bayes' not yet implemented")
+
+    ##        if (family=="hetero")
+    ##            res <- if(!monitoring) FSRH_control() else FSRHeda_control()
+    ##        else if (family=="bayes")
+    ##            res <- FSRB_control()
+
+        } else if(method=="S")
+                res <- if(!monitoring) Sreg_control() else Sregeda_control()
+        else if(method=="MM")
+                res <- if(!monitoring) MMreg_control() else MMregeda_control()
+        else if(method=="LTS")
+                res <- LXS_control(lms="lms")
+        else if(method=="LMS")
+                res <- LXS_control(lms="lts")
         else
-            stop("Families 'hetero' and 'bayes' not yet implemented")
-
-##        if (family=="hetero")
-##            res <- if(!monitoring) FSRH_control() else FSRHeda_control()
-##        else if (family=="bayes")
-##            res <- FSRB_control()
-
-    } else if(method=="S")
-            res <- if(!monitoring) Sreg_control() else Sregeda_control()
-    else if(method=="MM")
-            res <- if(!monitoring) MMreg_control() else MMregeda_control()
-    else if(method=="LTS")
-            res <- LXS_control(lms="lms")
-    else if(method=="LMS")
-            res <- LXS_control(lms="lts")
-    else
-        stop(paste("Undefined method: ", method))
-
+            stop(paste("Undefined method: ", method))
+    }
     res
 }
 

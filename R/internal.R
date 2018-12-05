@@ -78,9 +78,23 @@ checkOptArg <- function(optlist, paramName, structfnp)
   return (result)
 }
 
-rType2MatlabType <- function(attrName, attrValue, forceStringsToCellArray = FALSE)
+##  VT::14.01.2018 - asCellArray=FALSE - the numerics will be passed as cell array
+##  - independently of their length
+##  - used in resindexplot for the parameter 'numlab' - when with length 1, it can be either a scalar or a cell array
+##  - see the function numericVector2CellArray() which is identical to stringVector2CellArray
+##
+rType2MatlabType <- function(attrName, attrValue, forceStringsToCellArray = FALSE, asCellArray=FALSE)
 {
   val = NULL
+
+  if(asCellArray)  {
+    if (is.numeric(attrValue))
+        val = numericVector2CellArray((attrValue), "")
+    else
+        cat(paste("Warning: attribute <", attrName, "> cannot be transfered as Cell Array. Skipping...\n"))
+    return(val)
+  }
+
   if (is.numeric(attrValue) && length(attrValue) == 1) {         # Pure scalar value
     if (is.double(attrValue)) {
       val = .jnew("java/lang/Double", as.double(attrValue))
@@ -98,17 +112,21 @@ rType2MatlabType <- function(attrName, attrValue, forceStringsToCellArray = FALS
   }else if (is.vector(attrValue) && is.character(attrValue)) {   # Vector of strings
     val = stringVector2CellArray((attrValue), "")
   } else if (is.list(attrValue)) {                               # List (nested)
-    #          if (length(attrValue) > 0) {
-    val = list2MatlabStruct(attrValue, forceStringsToCellArray)
-    #          }
+    if (is.matrix(attrValue)) {
+      val = rewrapComplexNumericCellArray(attrValue)
+    } else {
+      val = list2MatlabStruct(attrValue, forceStringsToCellArray)
+    }
   } else if (is.logical(attrValue)) {
     if (attrValue == TRUE) {
       val = .jnew("java/lang/Boolean", "true")
     } else {
       val = .jnew("java/lang/Boolean", "false")
     }
+  } else if (isJavaObject(attrValue)) {                          # some kind of Java object
+    cat(paste("Warning: attribute <", attrName, "> is a Java object.\n"))
   } else {
-    cat(paste("Warning: attribute <", attrName, "> is of unknown type. Skipping...\n"))
+    cat(paste("Warning: attribute <", attrName, "> is of unknown type.\n"))
   }
 
   return(val)
@@ -126,33 +144,6 @@ list2MatlabStruct <- function(rList, forceStringsToCellArray = FALSE)
         attrValue = rList[[attrName]];
 
         if (!is.null(attrValue)) {
-          # val = NULL
-          # if (is.numeric(attrValue) && length(attrValue) == 1) {          # Pure scalar value
-          #   if (is.double(attrValue)) {
-          #     val = .jnew("java/lang/Double", as.double(attrValue))
-          #   } else if (is.integer(attrValue)) {
-          #     val = .jnew("java/lang/Integer", as.integer(attrValue))
-          #   }
-          # } else if (is.numeric(attrValue) && length(attrValue) > 1) {    # Vector of scalars
-          #   val = .jarray((attrValue), dispatch=TRUE)
-          # } else if (is.character(attrValue) && length(attrValue) == 1) { # Single string
-          #   val = .jnew("java/lang/String", attrValue)
-          # } else if (is.vector(attrValue) && is.character(attrValue)) {   # Vector of strings
-          #   val = stringVector2CellArray((attrValue), "")
-          # } else if (is.list(attrValue)) {                                # List (nested)
-          #   #          if (length(attrValue) > 0) {
-          #   val = list2MatlabStruct(attrValue)
-          #   #          }
-          # } else if (is.logical(attrValue)) {
-          #   if (attrValue == TRUE) {
-          #     val = .jnew("java/lang/Boolean", "true")
-          #   } else {
-          #     val = .jnew("java/lang/Boolean", "false")
-          #   }
-          # } else {
-          #   cat(paste("Warning: attribute <", attrName, "> is of unknown type. Skipping...\n"))
-          # }
-
           val = rType2MatlabType(attrName, attrValue, forceStringsToCellArray);
 
           if (!is.null(val)) {
@@ -174,6 +165,7 @@ list2MatlabStruct <- function(rList, forceStringsToCellArray = FALSE)
 
       for (i in 1:length(matlabFields)) {
         fieldName = .jnew("java/lang/String", matlabFields[i])
+
         fieldValue = .jcast(matlabValues[[i]], "java/lang/Object")
         structArray$set(fieldName, as.integer(1), fieldValue)
       }
@@ -257,7 +249,12 @@ checkRuntimeStop <- function()
 checkRuntime <- function()
 {
   ## Do the check for installed Matlab runtime
-  runtimeVersion = "v90" # R2015b
+
+##  VT::27.06.2018: update the MCR to V91 (R2016b)
+##
+##  runtimeVersion = "v90" # R2015b
+  runtimeVersion = "v91" # R2016b
+
   ## Three ways to check the host OS in R. Though Linux will be the most used
   ## platform (together with Windows), I would prefer the one returning a
   ## more generic "unix"-type OS rather than Linux. After all, the system
@@ -304,11 +301,13 @@ checkRuntime <- function()
       addJavabuilderJar2Classpath(path, pathsep, filesep, runtimeVersion, searchSubstring)
     }
   } else {
-    cat("\n!! Your installation does not contain the Matlab Runtime module.\n",
+    cat("\n!! Your installation does not contain the correct Matlab Runtime module.",
+        "\nRequired is R2016b (9.1).\n",
         "\nIn order to enable execution of MATLAB files on systems without",
-        "\nan installed version of MATLAB you need to install the Matlab Runtime",
-        "\n\nDownload and install the required version of the MATLAB Runtime",
-        "\nfrom the Web at http://www.mathworks.com/products/compiler/mcr.\n\n")
+        "\nan installed version of MATLAB you need to install the Matlab Runtime.",
+        "\n\nDownload and install the required version of the MATLAB Runtime - R2016b (9.1) - ",
+##        "\nfrom the Web at http://www.mathworks.com/products/compiler/mcr.\n\n")
+        "\n from http://ssd.mathworks.com/supportfiles/downloads/R2016b/deployment_files/R2016b/installers/win64/MCR_R2016b_win64_installer.exe\n\n")
   }
 
   return(rti)
@@ -447,4 +446,136 @@ stringVector2CellArray <- function(svec, type) {
   }
 
   return (cellArray)
+}
+
+## VT::14.01.2018 - almost identical to stringVector2CellArray
+##
+numericVector2CellArray <- function(nvec, type) {
+
+  # type of vector (row or column) provided as input parameter
+  if (!identical(type, "")) {
+    if (identical(type, "col")) {
+      rows = length(nvec)
+      cols = 1
+    } else {
+      rows = 1
+      cols = length(nvec)
+    }
+  }
+
+  # type of vector inferred from layout. Defaults to row type
+  # if dim(vector) is null
+  if (is.null(dim(nvec))) {
+    rows = length(nvec)
+    cols = 1
+  }
+
+  cellArray = .jnew("com/mathworks/toolbox/javabuilder/MWCellArray",
+                    as.integer(rows),
+                    as.integer(cols))
+
+  for (i in 1:length(nvec)) {
+
+    cellContent =
+        if(is.double(nvec[i])) .jnew("java/lang/Double", as.double(nvec[i]))
+        else .jnew("java/lang/Integer", as.integer(nvec[i]))
+
+    index = .jarray(c(as.integer(i), as.integer(1)), "[I", dispatch = TRUE)
+    .jcall(cellArray, "V", "set", index, .jcast(cellContent, "java/lang/Object"))
+  }
+
+  return (cellArray)
+}
+
+# Some data returned by the tclustIC function (namely, the IDXCLA and
+# IDXMIX structures) is rendered in MATLAB as # n-by-m matrix of cell arrays with
+# one element per row). This turns into a # very complex Java object mapping:
+#
+# In Java: Object[][] each element of which is a double[][1]
+#
+# When this data structure is returned to R, it is available as:
+# - An array of Java object references,
+#   - each element of which is a nested array of Java object references
+#     - each element of which is an R list of single-element arrays.
+#
+# This functions is meant to (sort of) turn this mess into a matrix of R lists.
+unwrapComplexNumericCellArray <- function(arr) {
+  nRows = length(arr)
+  nCols = length(arr[[1]])
+
+  retVal = matrix(list(), nrow = nRows, ncol = nCols)
+
+  for (i in 1:nRows) {
+    row = .jevalArray(arr[[i]])
+    for (j in 1:nCols) {
+      l = .jevalArray(row[[j]])
+      l = lapply(l, function(x) {as.double(.jevalArray(x, simplify = TRUE))})
+      # for (k in 1:length(l)) {
+      #   l[[k]] = as.double(.jevalArray(l[[k]], simplify = TRUE))
+      # }
+      retVal[[i, j]] = l;
+    }
+  }
+
+  return (retVal)
+}
+
+# rewrapComplexNumericCellArray <- function(arr) {
+#   ## TODO: make sure arr is a bi-dimensional array of lists.
+#   ## Otherwise return null
+#
+#   arrayConverter = new(J("org.jrc.ipsc.globesec.sitaf.fsda.ComplexArrayUtils"))
+#   nRows = dim(arr)[1]
+#   nCols = dim(arr)[2]
+#   objArr = arrayConverter$create2dObjectArray(as.integer(nRows), as.integer(nCols))
+#   for (i in 1:nRows) {
+#     for (j in 1:nCols) {
+#       doubleList = arr[i, j]
+#       doubleJavaArray2 = .jarray(as.matrix(unlist(arr[[i,j]])), dispatch = TRUE)
+#       # doubleJavaArray = arrayConverter$create2dDoubleArray(as.integer(length(doubleList[[1]])), as.integer(1))
+#       # for (k in 1:length(doubleList[[1]])) {
+#       #   retCode = arrayConverter$setDoubleArrayElement(doubleJavaArray, as.integer(k-1), as.integer(0), as.double(doubleList[[1]][[k]]))
+#       # }
+#       retCode = arrayConverter$setObjectArrayElement(objArr, as.integer(i-1), as.integer(j-1), doubleJavaArray2)
+#     }
+#   }
+#
+#   return (objArr)
+# }
+
+## Converts an R matrix of lists back into a Java-based MATLAB cell array
+rewrapComplexNumericCellArray <- function(arr) {
+  nRows = dim(arr)[1]
+  nCols = dim(arr)[2]
+
+  cellArray = .jnew("com/mathworks/toolbox/javabuilder/MWCellArray",
+                    as.integer(nRows),
+                    as.integer(nCols))
+
+  for (i in 1:nRows) {
+    for (j in 1:nCols) {
+      doubleList = arr[i, j]
+      doubleJavaArray2 = .jarray(as.matrix(unlist(arr[[i,j]])), dispatch = TRUE)
+      index = .jarray(c(as.integer(i), as.integer(j)), "[I", dispatch = TRUE)
+      .jcall(cellArray, "V", "set", index, .jcast(doubleJavaArray2, "java/lang/Object"))
+    }
+  }
+
+  return (cellArray)
+}
+
+isJavaObject <- function(obj) {
+  result <- tryCatch({
+      obj %instanceof% "java.lang.Object"
+    },
+    error = function(cond) {
+      return (FALSE)
+    },
+    warning = function(cond) {
+      return (FALSE)
+    },
+    finally = {
+    })
+
+  return (result)
 }

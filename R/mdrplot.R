@@ -1,4 +1,4 @@
-mdrplot <- function(out, quant=c(0.01, 0.5, 0.99), exact=0, sign=TRUE, mplus1=FALSE, envm,
+mdrplot <- function(out, quant=c(0.01, 0.5, 0.99), sign=TRUE, mplus1=FALSE, envm,
     xlim, ylim, xlab, ylab, main,
     lwdenv, lwd, cex.lab, cex.axis,
     tag, datatooltip, label, nameX, namey, databrush,
@@ -17,7 +17,6 @@ mdrplot <- function(out, quant=c(0.01, 0.5, 0.99), exact=0, sign=TRUE, mplus1=FA
     control = list(...)
 
     control$quant <- quant
-    control$exact <- exact
     control$sign <- ifelse(sign, 1, 0)
     control$mplus1 <- ifelse(mplus1, 1, 0)
     if(!missing(envm))

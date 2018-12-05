@@ -78,7 +78,6 @@ fsreg(x, \dots)
     breakdown point in case of S estimates or for series of values of the 
     efficiency in case of MM estimates. Deafault is \code{monitoring=FALSE}.} 
     
-Enables to monitor several quantities in each step of the forward search    
   \item{y}{
                Response variable. Vector. Response variable, specified as
                a vector of length n, where n is the number of

@@ -3,8 +3,13 @@
 
 export(fsreg,
     FSR_control, FSReda_control, Sreg_control, Sregeda_control, MMreg_control, MMregeda_control, LXS_control,
-    resfwdplot, mdrplot, levfwdplot)
-##    resfwdplot, mdrplot, resindexplot, levfwdplot, checkRuntime)
+    resfwdplot, mdrplot, resindexplot, levfwdplot,
+    fsmult,
+    smult, mmmult,
+    malfwdplot, mmdplot, malindexplot, corfwdplot,
+    fsmmmdrs, mmdrsplot
+#    , tclustfsda, tclustIC, tclustICsol, tclustICplot, carbikeplot
+    )
 
 importFrom("stats", "pf", "printCoefmat", "pt", "quantile")
 
@@ -13,9 +18,12 @@ importFrom(stats4, plot, summary)
 importFrom(methods, show)
 importFrom("stats", ".getXlevels", "coef", "is.empty.model",
          "model.matrix", "model.offset", "model.response",
-         "model.weights")
+         "model.weights",
+         "cor")
+importFrom("reshape2", "melt")
+importFrom("ggplot2", "ggplot", "aes", "geom_line", "facet_grid", "labs", "scale_x_reverse", "ylim")
 import(
-  robustbase,
+  rrcov,
   rJava
 )
 
@@ -37,3 +45,15 @@ S3method(summary, fsr)
 S3method(summary, fsdalms)
 S3method(summary, fsdalts)
 
+S3method(print, fsm)
+S3method(print, fsmeda)
+S3method(summary, fsm)
+S3method(print, summary.fsm)
+S3method(print, smult)
+S3method(print, smulteda)
+S3method(summary, smult)
+S3method(print, summary.smult)
+S3method(print, mmmult)
+S3method(print, mmmulteda)
+S3method(summary, mmmult)
+S3method(print, summary.mmmult)

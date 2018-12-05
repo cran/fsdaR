@@ -1,5 +1,29 @@
+2018-12-05  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.4-04 : completed documentation and examples
+    * DESCRIPTION (Version): 0.4-03 : reduced the size of jars, from 15MB to 600K
+    * DESCRIPTION (Version): 0.4-02
+    * DESCRIPTION (Version): 0.4-01
+    * DESCRIPTION (Version): 0.4-00
+    *
+    *  R/fsmmmdrs.R, mmdrsplot.R
+    *  R/tclust.R, tclustIC, tclustICsol, tclustICplot, carbikeplot
+    *  R/malfwdplot.R, malindexplot.R, mmdplot.R,
+    *  R/fsmult.R, smult.R, mmmult.R
+    *  R/internal.R: Updated the MATLAB runtime module MCR to
+    *       R2016b (V91) - was R2015 (V90).
+    *
+
+2018-03-23  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.3-04
+    * DESCRIPTION (Version): 0.3-03
+    *
+    * Added functions for multivariate analysis
+
 2017-12-11  Valentin Todorov  <valentin.todorov@chello.at>
     *
+    * DESCRIPTION (Version): 0.2-21
     * DESCRIPTION (Version): 0.2-20
     * DESCRIPTION (Version): 0.2-19
     * DESCRIPTION (Version): 0.2-18

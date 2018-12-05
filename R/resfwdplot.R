@@ -121,6 +121,10 @@ resfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
     if(length(bground) > 0)
         control$bground <- bground
 
+    # Hard-wire msg parameter to 1, thereby forcing the underlying MATLAB function
+    # to return the plotpopt struct
+    control$msg = 1
+    
     # Initialize parlist to the input values. All parameters from the control structure
     # must be added to the R list *before* converting it into a MATLAB struct
 
@@ -137,29 +141,6 @@ resfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
         for (i in 1:length(paramNames)) {
             paramName = paramNames[i];
             paramValue = control[[i]];
-            # ES 02/11/2017: take out this commented out code once certain the new function works OK
-            #
-            # if (is.numeric(paramValue) && length(paramValue) == 1) {# Pure scalar
-            #     paramValue = as.double(paramValue);
-            #     matlabValue = list(.jnew("java/lang/String", paramName), .jnew("java/lang/Double", paramValue))
-            # } else if (is.numeric(paramValue) && length(paramValue) > 1) { # Vector of scalars
-            #     matlabValue = list(.jnew("java/lang/String", paramName), .jarray(paramValue, dispatch=TRUE))
-            # } else if (is.character(paramValue) && length(paramValue) == 1) { # Single string # !is.vector(paramVelue)
-            #     matlabValue = list(.jnew("java/lang/String", paramName), .jnew("java/lang/String", paramValue))
-            # } else if (is.list(paramValue)) { # List(complex structure))
-            #     matlabValue = list(.jnew("java/lang/String", paramName), list2MatlabStruct(paramValue))
-            # #        structmap = structfnp(paramValue)
-            # #        matlabValue = list(.jnew("java/lang/String", paramName), structmap)
-            # #         stop(paste("Param <", paramName, ">'s type cannot (yet) be converted into a MATLAB-friendly type"))
-            # } else if (is.vector(paramValue) && is.character(paramValue)) {
-            # #        cellArr = structfnp(paramValue)
-            # #        matlabValue = list(.jnew("java/lang/String", paramName), cellArr)
-            #     stop(paste("Param <", paramName, ">'s type cannot (yet) be converted into a MATLAB-friendly type"))
-            # } else if (is.vector(paramValue) && is.numeric(paramValue)) {
-            #     matlabValue = list(.jnew("java/lang/String", paramName), .jarray(paramValue, dispatch = TRUE)) }
-            # else {
-            #     stop(paste("Param <", paramName, ">'s type cannot (yet) be converted into a MATLAB-friendly type"))
-            # }
 
             matlabValue = rType2MatlabType(paramName, paramValue, forceStringsToCellArray = TRUE)
 
@@ -223,7 +204,35 @@ getMatlabClass <- function(class)
          },
          mmreg = {
            matlabClass = "MMreg"
-         })
+         },
+         fsdalts = {
+           matlabClass = "LTS"
+         },
+         fsdalms = {
+           matlabClass = "LMS"
+         },
+         fsm = {
+           matlabClass = "FSM"
+         },
+         smult = {
+           matlabClass = "Smult"
+         },
+         mmmult = {
+           matlabClass = "MMmult"
+         },
+         fsmeda = {
+           matlabClass = "FSMeda"
+         },
+         smulteda = {
+           matlabClass = "Smulteda"
+         },
+         mmmulteda = {
+           matlabClass = "MMmulteda"
+         },
+         fsmmmdrs = {
+           matlabClass = "FSMmmdrs"
+         }
+         )
 
     if(matlabClass == "unknown")
         stop(paste0("Object of unknown class: ", class, "!"))
@@ -271,28 +280,32 @@ mapLineStyle <- function(lty)
 }
 
 ## Map R line colors to Matlab line colors
-mapColor <- function(col)
+.mapColor <- function(col=c("none", "auto", "red", "green", "blue", "cyan", "magenta", "yellow", "black", "white", "0", "1", "2", "3", "4", "5", "6", "7"))
 {
-    .mapColor <- function(col=c("red", "green", "blue", "cyan", "magenta", "yellow", "black", "white", "0", "1", "2", "3", "4", "5", "6", "7"))
+    ##  Matlab:
+    ##  r	Red
+    ##  g	Green
+    ##  b	Blue
+    ##  c	Cyan
+    ##  m	Magenta
+    ##  y	Yellow
+    ##  k	Black
+    ##  w	White
+
+    ##  R
+    ##  (1=black, 2=red, 3=green, 4=blue, 5=cyan, 6=magenta, 7=yellow, 8=)
+    df <- data.frame(Matlab=c("r", "g", "b", "c", "m", "y", "k", "w"), Rname=c("red", "green", "blue", "cyan", "magenta", "yellow", "black", "white"), Rnumber=c(2:7, 1, 0), stringsAsFactors=FALSE)
+
+    if(length(col) == 1 && is.numeric(col))
+        col <- as.character(col)
+
+    if(length(col) == 1 && (col == "none" | col == "auto"))
+        ret <- col
+    else if(is.numeric(col) & length(col) == 3)
+        ret <- col
+    else
     {
-        ##  Matlab:
-        ##  r	Red
-        ##  g	Green
-        ##  b	Blue
-        ##  c	Cyan
-        ##  m	Magenta
-        ##  y	Yellow
-        ##  k	Black
-        ##  w	White
-
-        ##  R
-        ##  (1=black, 2=red, 3=green, 4=blue, 5=cyan, 6=magenta, 7=yellow, 8=)
-
-        if(is.numeric(col))
-            col <- as.character(col)
         col <- match.arg(col)
-        df <- data.frame(Matlab=c("r", "g", "b", "c", "m", "y", "k", "w"), Rname=c("red", "green", "blue", "cyan", "magenta", "yellow", "black", "white"), Rnumber=c(2:7, 1, 0), stringsAsFactors=FALSE)
-
         if(length(ind <- which(col == df$Rname | col == df$Rnumber)) > 0)
         {
             ret <- df[ind, "Matlab"]
@@ -302,11 +315,14 @@ mapColor <- function(col)
                 ret <- df$Matlab[1]
             }
         }
-        ret
     }
+    ret
+}
 
+mapColor <- function(col)
+{
     col <- sapply(col, .mapColor)
-    if(length(col) == 1)
+    if(length(col) == 1 & col != "none" & col != "auto")
         col[[2]] <- col[[1]]
 
     col

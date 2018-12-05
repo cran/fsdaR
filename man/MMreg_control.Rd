@@ -109,7 +109,8 @@ FSDA team
 }
 \examples{
 
-(out <- fsreg(Y~., data=hbk, method="MM", control=MMreg_control(eff=0.99, rhofunc="optimal")))
+## (out <- fsreg(Y~., data=hbk, method="MM", control=MMreg_control(eff=0.99, rhofunc="optimal")))
+(out <- fsreg(Y~., data=hbk, method="MM", control=MMreg_control(eff=0.99)))
 
 }
 \keyword{robust}
