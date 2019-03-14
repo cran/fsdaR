@@ -43,9 +43,11 @@
   The object has class \code{"fsmult"}.
 }
 \examples{
+\dontrun{  
     (out <- fsmult(hbk[,1:3]))
     class(out)
     summary(out)
+}
 }
 \keyword{robust}
 \keyword{multivariate}

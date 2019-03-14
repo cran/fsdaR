@@ -48,7 +48,7 @@ mmdplot(out, databrush=TRUE)
 ##
 ## Control the characteristics of the units in foreground in the malfwdplot():
 ##
-## Labels will be included for the units specified in gf.unit (these are the units entering the last
+## Labels will be included for the units specified in fg.unit (these are the units entering the last
 ## six steps of the search)
 ##      fg.unit=c(1, 13, 40, 70, 71, 5)
 ##
@@ -64,7 +64,7 @@ malfwdplot(out, xlim=c(28, 100), fg.unit=c(1, 13, 40, 70, 71, 5), fg.cex=1.5, fg
 ## EX 5: Interactive example: brushing using a rectangular selection tool and cyan color
 malfwdplot(out, databrush=list(selectionmode='Brush', FlagColor='c'))
 
-## Ex 5a: Interactive example: persistant noncumulative plot
+## Ex 5a: Interactive example: persistent noncumulative plot
 ##  Labels are added for the brushed units. Persistent labels
 ##      appear in the plot which has been brushed
 malfwdplot(out, databrush=list(selectionmode='Rect', persist='off',

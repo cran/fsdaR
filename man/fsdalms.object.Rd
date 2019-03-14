@@ -30,9 +30,11 @@
   The object has class \code{"fsdalms"}.
 }
 \examples{
+\dontrun{  
     (out <- fsreg(Y~., data=hbk, method="LMS"))
     class(out)
     summary(out)
+}
 }
 \keyword{robust}
 \keyword{regression}

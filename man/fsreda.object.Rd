@@ -99,9 +99,11 @@
   The object has class \code{"fsreda"}.
 }
 \examples{
+ \dontrun{
     (out <- fsreg(Y~., data=hbk, method="FS", monitoring=TRUE))
     class(out)
     summary(out)
+}
 }
 \keyword{robust}
 \keyword{regression}

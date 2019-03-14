@@ -69,12 +69,11 @@
 
 #' @examples
 #'
+#'  \dontrun{
 #'  data(hbk)
 #'  (out <- smult(hbk[,1:3]))
 #'  class(out)
 #'  summary(out)
-#'
-#'  \dontrun{
 #'
 #'  ##  Generate contaminated data (200,3)
 #'  n <- 200

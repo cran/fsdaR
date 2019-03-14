@@ -7,5 +7,4 @@
     packageStartupMessage(paste(title, " (version ", ver, ")\n", sep = ""))
 
     checkRuntime()
-
 }

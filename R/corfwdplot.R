@@ -108,11 +108,12 @@ corfwdplot <- function(out, trace=FALSE, ...)
     rho[,1] <- rep(x,3)
     colnames(rho) <- c("x", "z", "y")
     p <- ggplot(data=rho, aes(x=x, y=y)) +
-            geom_line() + facet_grid(z~., scales="free") +
-            labs(x=xlab, y="")
-        if(class(out) == "smulteda" | class(out) == "sregeda"){
-           p <- p + scale_x_reverse() +
-                ylim(ylimits)
+         geom_line() + facet_grid(z~., scales="free") +
+         labs(x=xlab, y="Correlation") +
+         theme_light(base_family="sans")
+
+         if(class(out) == "smulteda" | class(out) == "sregeda"){
+            p <- p + scale_x_reverse() + ylim(ylimits)
         }
     p
 }

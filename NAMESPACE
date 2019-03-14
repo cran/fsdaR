@@ -8,7 +8,7 @@ export(fsreg,
     smult, mmmult,
     malfwdplot, mmdplot, malindexplot, corfwdplot,
     fsmmmdrs, mmdrsplot
-#    , tclustfsda, tclustIC, tclustICsol, tclustICplot, carbikeplot
+  , tclustfsda, tclustIC, tclustICsol, tclustICplot, carbikeplot
     )
 
 importFrom("stats", "pf", "printCoefmat", "pt", "quantile")
@@ -21,7 +21,7 @@ importFrom("stats", ".getXlevels", "coef", "is.empty.model",
          "model.weights",
          "cor")
 importFrom("reshape2", "melt")
-importFrom("ggplot2", "ggplot", "aes", "geom_line", "facet_grid", "labs", "scale_x_reverse", "ylim")
+importFrom("ggplot2", "ggplot", "aes", "geom_line", "facet_grid", "labs", "scale_x_reverse", "ylim", "theme_light")
 import(
   rrcov,
   rJava
@@ -57,3 +57,13 @@ S3method(print, mmmult)
 S3method(print, mmmulteda)
 S3method(summary, mmmult)
 S3method(print, summary.mmmult)
+
+S3method(print, tclustfsda)
+S3method(summary, tclustfsda)
+S3method(print, summary.tclustfsda)
+S3method(print, tclusteda)
+S3method(summary, tclusteda)
+S3method(print, summary.tclusteda)
+S3method(print, tclustic)
+S3method(summary, tclustic)
+S3method(print, summary.tclustic)

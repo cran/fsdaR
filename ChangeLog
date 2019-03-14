@@ -1,3 +1,11 @@
+2019-03-13  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.4-06 : fixed problems in tclustIC, tclustICsol
+    * DESCRIPTION (Version): 0.4-05 : completed documentation and examples
+    *
+    *  R/tclust.R, tclustIC, tclustICsol, tclustICplot, carbikeplot
+    *
+
 2018-12-05  Valentin Todorov  <valentin.todorov@chello.at>
     *
     * DESCRIPTION (Version): 0.4-04 : completed documentation and examples

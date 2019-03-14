@@ -17,8 +17,6 @@
 #'  words the default is \code{quant=c(0.01, 0.5, 0.99)}.
 #'
 #' @param mplus1 Wheather to plot the (m+1)-th order statistic.
-#'  Specifies if it is necessary to plot the curve associated with
-#'  (m+1)-th order statistic.
 #'
 #' @param envm Sample size for drawing enevlopes. Specifies the size of the sample which is
 #'  used to superimpose the envelope. The default is to add an envelope based on
@@ -29,9 +27,10 @@
 #' @param ylim Control the y scale in plot. Vector with two elements controlling
 #'  minimum and maximum on the y axis. Default is to use automatic scale.
 #'
-#' @param lwd Controls the linewidth of the curve which contains the monitoring
+#' @param lwd Controls the line width of the curve which contains the monitoring
 #'  of minimum deletion residual.
-#' @param lwdenv line width: a scalar which controls the width of the lines associated with the envelopes. Default is \code{lwdenv=1}
+#'
+#' @param lwdenv Controls the width of the lines associated with the envelopes. Default is \code{lwdenv=1}
 #'
 #' @param tag Plot handle. String which identifies the handle of the plot which is about to be created.
 #'  The default is \code{tag='pl_mmd'}. Notice that if the program finds a plot which has
@@ -78,14 +77,18 @@
 #'
 #'    If \code{databrush=list(...)}, it is possible to use all optional arguments of
 #'    the MATLAB function \code{selectdataFS()} and the following optional arguments:
-#'    \enumerate{
-#'    \item persist. Persist is an empty value or a character containing 'on' or 'off'.
+#'    \itemize{
+#'    \item \code{persist}: This option can be an empty value or a character containing 'on' or 'off'.
 #'        The default value is \code{persist=""}, that is brushing is allowed only once.
-#'    If \code{persist="on"} or \code{persis="off"} brushing can be done as many time as
-#'    the user requires. If \code{persist='on'} then the unit(s) currently brushed are
-#'    added to those previously brushed. It is possible, every time a new brushing is
-#'    done, to use a different color for the brushed units. If \code{persist='off'}
-#'    every time a new brush is performed units previously brushed are removed.
+#'        If \code{persist="on"} or \code{persis="off"} brushing can be done as many time as
+#'        the user requires. If \code{persist='on'} then the unit(s) currently brushed are
+#'        added to those previously brushed. It is possible, every time a new brushing is
+#'        done, to use a different color for the brushed units. If \code{persist='off'}
+#'        every time a new brush is performed units previously brushed are removed.
+#'    \item \code{labeladd}: add labels of brushed units in the scatterplot matrix.
+#'        If this option is '1', we label the units of the last selected group with
+#'        the unit row index in the matrix X. The default value is labeladd='',
+#'        i.e. no label is added.
 #'    }
 #'
 #' @param trace Whether to print intermediate results. Default is \code{trace=FALSE}.

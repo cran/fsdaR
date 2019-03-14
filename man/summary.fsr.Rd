@@ -36,13 +36,14 @@
   \code{\link{fsreg}}, \code{\link{summary}}
 }
 \examples{
+\dontrun{
 
     data(Animals, package = "MASS")
     brain <- Animals[c(1:24, 26:25, 27:28),]
     lbrain <- log(brain)
     (fs <- fsreg(brain~body, data=lbrain, method="FS"))
     summary(fs)
-
+}
 }
 \keyword{multivariate}
 \keyword{robust}

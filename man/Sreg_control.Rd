@@ -116,9 +116,9 @@ FSDA team
     See Also as \code{\link{FSR_control}}, \code{\link{MMreg_control}} and \code{\link{LXS_control}}
 }
 \examples{
-
+\dontrun{  
 (out <- fsreg(Y~., data=hbk, method="S", control=Sreg_control(bdp=0.25, nsamp=500)))
-
+}
 }
 \keyword{robust}
 \keyword{regression}

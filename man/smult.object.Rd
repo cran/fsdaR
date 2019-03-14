@@ -33,10 +33,12 @@
   The object has class \code{"smult"}.
 }
 \examples{
+    \dontrun{
     data(hbk)
     (out <- smult(hbk[,1:3]))
     class(out)
     summary(out)
+    }
 }
 \keyword{robust}
 \keyword{multivariate}

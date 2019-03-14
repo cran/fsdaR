@@ -78,9 +78,11 @@
   The object has class \code{"fsmeda"}.
 }
 \examples{
+\dontrun{  
     (out <- fsmult(hbk[,1:3], monitoring=TRUE))
     class(out)
     summary(out)
+}
 }
 \keyword{robust}
 \keyword{multivariate}

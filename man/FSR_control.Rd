@@ -163,8 +163,11 @@ FSDA team}
     \code{\link{FSReda_control}}, \code{\link{Sregeda_control}} and \code{\link{MMregeda_control}}.
 }
 \examples{
+\dontrun{
+
 (out <- fsreg(Y~., data=hbk, method="FS", control=FSR_control(h=56, nsamp=500, lms=2)))
 summary(out)
+}
 }
 \keyword{robust}
 \keyword{regression}

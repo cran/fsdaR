@@ -16,7 +16,7 @@ plot(CovClassic(swissbanknotes[,1:6]), which="pairs", col=swissbanknotes$class)
 
 ##prompt(swisbanknotes)
 
-save(swissbanknotes, file="swissbanknotes.rda")
+save(swissbanknotes, file="swissbanknotes.rda", version=2)
 
 ## Example
 
@@ -41,7 +41,7 @@ diabetes[,2:4]-df
 
 colnames(diabetes)
 diabetes <- diabetes[,c("glucose", "insulin", "sspg", "class")]
-save(diabetes, file="diabetes.rda")
+save(diabetes, file="diabetes.rda", version=2)
 
 ## The diabetes dataset, introduced by Reaven and Miller (1979),
 ##  consists of 145 observations (patients). For each patient three
@@ -59,4 +59,51 @@ save(diabetes, file="diabetes.rda")
 swissheads <- read.table("head.txt")
 colnames(swissheads) <- c('minimal_frontal_breadth',  'breadth_angulus_mandibulae',  'true_facial_height',  'length_glabella_nasi',  'length_tragion_nasion',  'length_tragion_gnathion')
 head(swissheads)
-save(swissheads, file="swissheads.rda")
+save(swissheads, file="swissheads.rda", version=2)
+
+##---------------------------------------------------------------
+##
+## Emilia Romana
+##
+cols <- c('less10',    'more75',    'single',    'divorced',    'widows',    'graduates',    'no_education',
+    'employed',    'unemplyed',    'increase_popul',    'migration',    'birth_92_94',    'fecundity',
+    'houses',    'houses_2WCs',    'houses_heating',    'TV',    'cars', 'luxury_cars',    'hotels',
+    'banking',    'income',    'income_tax_returns',    'factories',    'factories_more10', 'factories_more50',
+    'artisanal',    'entrepreneurs')
+
+##  The data set of the municipalities in Emilia Romagna, introduced by
+##  Atkinson et al. (2004), contains 341 records for 341 municipalities
+##  of Emilia Romagna (an Italian region) for 28 demographic variables.
+
+emilia2001 <- read.table("emilia2001.txt")
+head(emilia2001)
+dim(emilia2001)
+colnames(emilia2001) <- cols
+head(emilia2001)
+save(emilia2001, file="emilia2001.rda", version=2)
+
+mcd <- CovMcd(emilia2001)
+plot(mcd)
+
+##---------------------------------------------------------------
+##
+## Geyser data
+##
+##  geyser2 <- read.table("geyser2.txt")
+library(tclust)
+data(geyser2)
+head(geyser2)
+dim(geyser2)
+save(geyser2, file="geyser2.rda", version=2)
+
+##---------------------------------------------------------------
+##
+## M5data data
+##
+##  M5data <- read.table("M5data.txt")
+##  colnames(M5data) <- c("X", "Y", "cluster")
+library(tclust)
+data(M5data)
+head(M5data)
+dim(M5data)
+save(M5data, file="M5data.rda", version=2)

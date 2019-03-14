@@ -144,6 +144,7 @@ fsreg(x, \dots)
 }
 
 \examples{
+    \dontrun{
 
     n <- 200
     p <- 3
@@ -169,6 +170,7 @@ fsreg(x, \dots)
 
     ## using default (optional arguments)        
     (out6 = fsreg(Y~.-1, data=hbk, control=FSR_control(plot=FALSE, nsamp=1500, h=50)))
+    }
 }
 \keyword{robust}
 \keyword{regression}

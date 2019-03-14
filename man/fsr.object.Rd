@@ -41,9 +41,11 @@
   The object has class \code{"fsr"}.
 }
 \examples{
+\dontrun{  
     (out <- fsreg(Y~., data=hbk, method="FS"))
     class(out)
     summary(out)
+}
 }
 \keyword{robust}
 \keyword{regression}

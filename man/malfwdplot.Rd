@@ -12,7 +12,7 @@ malfwdplot(out, xlim, ylim, xlab, ylab, main, lwd, lty, col, cex.lab,
 \arguments{
 \item{out}{An object of S3 class \code{\link{fsmeda.object}} returned by
  \code{\link{fsmult}} with \code{monitoring=TRUE} -
- a list containing the monitoring of minimum Mahalanobis distance
+ a list containing the monitoring of minimum Mahalanobis distance.
 
  The needed elements of \code{out} are
    \enumerate{
@@ -20,15 +20,15 @@ malfwdplot(out, xlim, ylim, xlab, ylab, main, lwd, lty, col, cex.lab,
          step of the forward search. Every row is associated with a unit (row of data matrix Y).
          This matrix can be created using function FSMeda (mandatory argument)
        \item \code{Un}: matrix containing the order of entry of each unit
-               (necessary if datatooltip is true or databrush is not empty).
+               (necessary if datatooltip or databrush is selected).
        \item \code{X}: The data matrix.
      }}
 
-\item{xlim}{Control \code{x} scale in plot. Vector with two elements controlling
-minimum and maximum on the x axis. Default is to use automatic scale.}
+\item{xlim}{Controls the \code{x} scale in the plot. \code{xlim} is a vector with two elements controlling
+minimum and maximum on the \code{x}-axis. Default is to use automatic scale.}
 
-\item{ylim}{Control \code{y} scale in plot. Vector with two elements controlling
-minimum and maximum on the y axis. Default is to use automatic scale.}
+\item{ylim}{Controls the \code{y} scale in the plot. \code{ylim} is a vector with two elements controlling
+minimum and maximum on the \code{y}-axis. Default is to use automatic scale.}
 
 \item{xlab}{A title for the x axis}
 
@@ -50,14 +50,15 @@ The latter two are not supported by Matlab.}
 \item{cex.axis}{The magnification to be used for axis annotation relative to the current setting of cex}
 
 \item{subsize}{Numeric vector containing the subset size with length equal to the number of columns of
-matrix of MD. The default value of subsize is \code{(nrow(MAL) - ncol(MAL) + 1):nrow(MAL)}}
+matrix of mahalanobis distances. The default value of subsize is \code{(nrow(MAL) - ncol(MAL) + 1):nrow(MAL)}}
 
-\item{fg.thresh}{(alternative to fg.unit) numeric vector of length 1 or 2 which specifies the highlighted trajectories.
-If \code{length(fthresh) == 1} the highlighted trajectories are those of units that throughtout
-the search had at leat once a residual greater (in absolute value) than thresh.
-The default value is \code{fg.thresh=2.5}. If \code{length(fthresh) == 2} the highlighted
-trajectories are those of units that throughtout the search had a residual at
-leat once bigger than \code{fg.thresh[2]} or smaller than \code{fg.thresh[1]}.}
+\item{fg.thresh}{(alternative to fg.unit) numeric vector of length 1 or 2 which specifies
+the highlighted trajectories.
+If \code{length(fg.thresh) == 1} the highlighted trajectories are those of units that throughtout
+the search had at leat once a mahalanobis distance greater than \code{fg.thresh}.
+The default value is \code{fg.thresh=2.5}. If \code{length(fg.thresh) == 2} the highlighted
+trajectories are those of units that throughtout the search had a mahalanobis distance at
+least once bigger than \code{fg.thresh[2]} or smaller than \code{fg.thresh[1]}.}
 
 \item{fg.unit}{(alternative to fg.thresh), vector containing the list of the units to be highlighted.
 If \code{fg.unit} is supplied, \code{fg.thresh} is ignored.}
@@ -80,24 +81,25 @@ The latter two are not supported by Matlab.}
 if \code{fg.mark==TRUE} each line is plotted using a different
 symbol else no marker is used (default).}
 
-\item{fg.cex}{Controls the font size of the labels of the trajectories in foreground.}
+\item{fg.cex}{Controls the font size of the labels of the trajectories in foreground. If
+\code{fg.cex=0} no labels will be shown - equivalent to \code{fg.labstop=""}.}
 
-\item{bg.thresh}{Numeric vector of length 1 or 2 which specifies how to define the unimmportant trajectories.
+\item{bg.thresh}{Numeric vector of length 1 or 2 which specifies how to define the \emph{unimmportant trajectories}.
 Unimmportant trajectories will be plotted using a colormap, in greysh or will be hidden.
-If \code{length(thresh) == 1} the irrelevant units are those which always
-had a residual smaller (in absolute value) than thresh.
+If \code{length(bg.thresh) == 1} the irrelevant units are those which always
+had a mahalanobis distance smaller than \code{bg.thresh}.
 If \code{length(bg.thresh) == 2} the irrelevant units are those which always
-had a residual greater than bg.thresh(1) and smaller than bg.thresh(2). The default is:
-\code{bg.thresh=2.5} if \code{n > 100} and \code{bg.thresh=-Inf} if \code{n <= 100}
+had a mahalanobis distance greater than \code{bg.thresh[1]} and smaller than \code{bg.thresh[2]}.
+The default is \code{bg.thresh=2.5} if \code{n > 100} and \code{bg.thresh=-Inf} if \code{n <= 100}
 i.e. to treat all trajectories as important if \code{n <= 100} and, if \code{n > 100},
 to reduce emphasis only to trajectories having in all steps of the search a value
-of scaled residual smaller than 2.5.}
+of mahalanobis distance smaller than 2.5.}
 
 \item{bg.style}{Specifies how to plot the unimportant trajectories as defined in option bg.thresh.
 \enumerate{
-\item \code{bg.style="faint"}: unimportant trajectories are plotted using a colormap.
-\item \code{bg.style="hide"}: unimportant trajectories are hidden.
-\item \code{bg.style="greyish"}: unimportant trajectories are displayed in a faint grey.
+  \item \code{bg.style="faint"}: unimportant trajectories are plotted using a colormap.
+  \item \code{bg.style="hide"}: unimportant trajectories are hidden.
+  \item \code{bg.style="greyish"}: unimportant trajectories are displayed in a faint grey.
 }
 When \code{n > 100} the default option is \code{bg.style='faint'}. When \code{n <= 100}
 and \code{bg.thresh == -Inf} option bg.style is ignored.
@@ -117,7 +119,7 @@ the existing one in the same window else a new window is created.}
 
 \item{datatooltip}{Interactive clicking. It is inactive if this parameter is set to FALSE.
 The default is \code{datatooltip=TRUE}, the user can select with the mouse an individual
-MD trajectory in order to have information about the corresponding unit, the associated
+mahalanobis distance trajectory in order to have information about the corresponding unit, the associated
 label and the step of the search in which the unit enters the subset.
 If datatooltip is a list it may contain the following fields:
 \enumerate{
@@ -159,35 +161,36 @@ containing the labels of the variables in the dataset.
 If it is empty (default) the sequence \code{X1, ..., Xp} will be created automatically}
 
 \item{databrush}{Interactive mouse brushing. If databrush is missing or empty (default), no brushing is done.
- The activation of this option (databrush is TRUE or a list) enables the user to select
+ The activation of this option (databrush is \code{TRUE} or a list) enables the user to select
    a set of trajectories in the current plot and to see them highlighted in the scatterplot matrix.
    If the scatterplot matrix does not exist it is automatically created.
-   In addition, brushed units can be highlighted in the monitoring MD plot. Note that the window
-   style of the other figures is set equal to that which contains the monitoring residual plot.
-   In other words, if the monitoring residual plot is docked all the other figures will be docked too.
+   In addition, brushed units can be highlighted in the monitoring mahalanobis distance plot.
+   Note that the window style of the other figures is set equal to that which contains the monitoring mahalanobis distance plot.
+   In other words, if the monitoring mahalanobis distance plot is docked all the other figures will be docked too.
 
    If \code{databrush=TRUE} the default selection tool is a rectangular brush and it is
    possible to brush only once (that is persist='').
 
-   Note that the window style of the other figures is set equal to that which contains the
-   monitoring residual plot. In other words, if the monitoring residual plot is docked all
-   the other figures will be docked too
-
    If \code{databrush=list(...)}, it is possible to use all optional arguments of
    the MATLAB function \code{selectdataFS()} and the following optional arguments:
-   \enumerate{
+   \itemize{
    \item persist. Persist is an empty value or a character containing 'on' or 'off'.
        The default value is \code{persist=""}, that is brushing is allowed only once.
-   If \code{persist="on"} or \code{persis="off"} brushing can be done as many time as
-   the user requires. If \code{persist='on'} then the unit(s) currently brushed are
-   added to those previously brushed. It is possible, every time a new brushing is
-   done, to use a different color for the brushed units. If \code{persist='off'}
-   every time a new brush is performed units previously brushed are removed.
+       If \code{persist="on"} or \code{persis="off"} brushing can be done as many time as
+       the user requires. If \code{persist='on'} then the unit(s) currently brushed are
+       added to those previously brushed. It is possible, every time a new brushing is
+       done, to use a different color for the brushed units. If \code{persist='off'}
+       every time a new brush is performed units previously brushed are removed.
+   \item \code{label}: add labels of brushed units in the monitoring plot.
+   \item \code{labeladd}: add labels of brushed units in the scatterplot matrix.
+       If this option is '1', we label the units of the last selected group with
+       the unit row index in the matrix X. The default value is labeladd='',
+       i.e. no label is added.
    }}
 
 \item{conflev}{confidence interval for the horizontal bands. It can be a vector of
 different confidence level values, e.g. c(0.95, 0.99, 0.999).
-The confidence interval is based on the chi^2 distribution.}
+The confidence interval is based on the $chi^2$ distribution.}
 
 \item{trace}{Whether to print intermediate results. Default is \code{trace=FALSE}.}
 
@@ -197,7 +200,7 @@ The confidence interval is based on the chi^2 distribution.}
 none
 }
 \description{
-Plots the trajectories of scaled Mahalanobis distances along the search
+Plots the trajectories of scaled Mahalanobis distances along the forward search
 }
 \examples{
 

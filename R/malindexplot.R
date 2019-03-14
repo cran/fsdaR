@@ -40,10 +40,12 @@
 
 #' @examples
 #'
+#'  \dontrun{
 #'  ##  Mahalanobis distance plot of 100 random numbers.
 #'  ##  Numbers are from from the chisq with 5 degrees of freedom
 #'
 #'  malindexplot(rchisq(100, 5), 5)
+#'  }
 #'
 #' @export
 #' @author FSDA team, \email{valentin.todorov@@chello.at}
@@ -63,7 +65,7 @@ malindexplot <- function(out, p, xlab, ylab, main, nameX,
 
     if(is.list(out))
     {
-        if(class(out) == "fsmult" | class(out) == "smult" | class(out) == "mmmult")
+        if(class(out) == "fsm" | class(out) == "smult" | class(out) == "mmmult")
         {
             ## The needed elements are mahalanobis distances, md and number of variables p.
             ##  The R class name is mapped to a Matlab class name

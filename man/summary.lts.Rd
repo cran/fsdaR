@@ -36,6 +36,7 @@
   \code{\link{fsreg}}, \code{\link{summary}}
 }
 \examples{
+\dontrun{
 
     data(Animals, package = "MASS")
     brain <- Animals[c(1:24, 26:25, 27:28),]
@@ -46,7 +47,7 @@
     ## compare to the result of ltsReg() from 'robustbase'
     (lts <- ltsReg(brain~body, data=lbrain))
     summary(lts)
-    
+}    
 }
 \keyword{multivariate}
 \keyword{robust}

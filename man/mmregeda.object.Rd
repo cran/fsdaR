@@ -31,11 +31,11 @@
   The object has class \code{"mmregeda"}.
 }
 \examples{
-
+\dontrun{
     (out <- fsreg(Y~., data=hbk, method="MM", monitoring=TRUE))
     class(out)
     summary(out)
-
+}
 }
 \keyword{robust}
 \keyword{regression}

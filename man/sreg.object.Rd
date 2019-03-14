@@ -33,11 +33,11 @@
   The object has class \code{"sreg"}.
 }
 \examples{
-
+\dontrun{
     (out <- fsreg(Y~., data=hbk, method="S"))
     class(out)
     summary(out)
-
+}
 }
 \keyword{robust}
 \keyword{regression}

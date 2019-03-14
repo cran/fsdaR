@@ -80,10 +80,10 @@ FSDA team}
     See Also as \code{\link{FSR_control}}, \code{\link{Sreg_control}}, \code{\link{MMreg_control}} and \code{\link{LXS_control}}
 }
 \examples{
-
+\dontrun{  
 (out <- fsreg(Y~., data=hbk, method="MM", monitoring=TRUE, 
     control=MMregeda_control(eff=seq(0.75, 0.99, 0.01))))
-
+}
 }
 \keyword{robust}
 \keyword{regression}

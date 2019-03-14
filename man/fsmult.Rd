@@ -62,7 +62,7 @@ If plot is a list it may contain the following fields:
     Default value is '' (automatic scale)
   \item xlim vector with two elements controlling minimum and maximum on the x axis.
     Default value is '' (automatic scale)
-   \item rsuper vector which specifies for which steps it is necessary to show the plots
+   \item resuper vector which specifies for which steps it is necessary to show the plots
         of resuperimposed envelopes if resuper is not supplied a plot of each step in which
         the envelope is resuperimposed is shown. Example: if \code{resuper = c(85 87)}
         plots of resuperimposedenvelopes are shown at steps \code{m=85} and \code{m=87}
@@ -120,12 +120,12 @@ Gives an automatic outlier detection procedure in multivariate analysis and
  performs forward search in multivariate analysis with exploratory data
 }
 \examples{
+ \dontrun{
+
  data(hbk)
  (out <- fsmult(hbk[,1:3]))
  class(out)
  summary(out)
-
- \dontrun{
 
  ##  Generate contaminated data (200,3)
  n <- 200

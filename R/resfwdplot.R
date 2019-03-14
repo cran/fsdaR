@@ -124,7 +124,7 @@ resfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
     # Hard-wire msg parameter to 1, thereby forcing the underlying MATLAB function
     # to return the plotpopt struct
     control$msg = 1
-    
+
     # Initialize parlist to the input values. All parameters from the control structure
     # must be added to the R list *before* converting it into a MATLAB struct
 
@@ -211,7 +211,7 @@ getMatlabClass <- function(class)
          fsdalms = {
            matlabClass = "LMS"
          },
-         fsm = {
+         fsmult = {
            matlabClass = "FSM"
          },
          smult = {

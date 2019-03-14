@@ -48,8 +48,10 @@
 #'  Remark: if \code{crit="biv"} the user can also supply in scalar rf (see below) the confidence level of
 #'  the bivariate ellipses.
 #' @param rf Confidence level for bivariate ellipses. The default is 0.95. This option is useful only if \code{crit='biv'}.
+
 #' @param init Point where to start monitoring required diagnostics. Note that if a vector \code{m0} is
 #'  supplied, \code{init >= length(m0)}. If \code{init} is not specified it will be set equal to \code{floor(n*0.6)}.
+
 #' @param plot Plots the minimum Mahalanobis distance. If \code{plot=FALSE} (default) or \code{plot=0}  no plot is produced.
 #'  If \code{plot=TRUE} the plot of minimum MD with envelopes based on n observations and the
 #'  scatterplot matrix with the outliers highlighted is produced.
@@ -60,7 +62,7 @@
 #'      Default value is '' (automatic scale)
 #'    \item xlim vector with two elements controlling minimum and maximum on the x axis.
 #'      Default value is '' (automatic scale)
-#'     \item rsuper vector which specifies for which steps it is necessary to show the plots
+#'     \item resuper vector which specifies for which steps it is necessary to show the plots
 #'          of resuperimposed envelopes if resuper is not supplied a plot of each step in which
 #'          the envelope is resuperimposed is shown. Example: if \code{resuper = c(85 87)}
 #'          plots of resuperimposedenvelopes are shown at steps \code{m=85} and \code{m=87}
@@ -127,12 +129,12 @@
 #'       forward search} Springer Verlag, New York.
 #'
 #' @examples
+#'  \dontrun{
+#'
 #'  data(hbk)
 #'  (out <- fsmult(hbk[,1:3]))
 #'  class(out)
 #'  summary(out)
-#'
-#'  \dontrun{
 #'
 #'  ##  Generate contaminated data (200,3)
 #'  n <- 200

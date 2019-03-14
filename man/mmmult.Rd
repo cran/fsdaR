@@ -63,12 +63,11 @@ This function follows the lines of MATLAB/R code developed during the years by m
 }
 \examples{
 
+ \dontrun{
  data(hbk)
  (out <- mmmult(hbk[,1:3]))
  class(out)
  summary(out)
-
- \dontrun{
 
  ##  Generate contaminated data (200,3)
  n <- 200

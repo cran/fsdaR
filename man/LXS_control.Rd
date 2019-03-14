@@ -112,9 +112,9 @@ FSDA team}
 }
 
 \examples{
-
+\dontrun{  
 (out <- fsreg(Y~., data=hbk, method="LMS", control=LXS_control(h=56, nsamp=500, lms=2)))
-
+}
 }
 \keyword{robust}
 \keyword{regression}

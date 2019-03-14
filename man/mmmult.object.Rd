@@ -29,10 +29,12 @@
   The object has class \code{"mmmult"}.
 }
 \examples{
+    \dontrun{
     data(hbk)
     (out <- mmmult(hbk[,1:3]))
     class(out)
     summary(out)
+    }
 }
 \keyword{robust}
 \keyword{multivariate}

@@ -297,6 +297,7 @@ checkRuntime <- function()
   # }
   rti = grepl(searchSubstring, path,  fixed=TRUE) > 0
   if (rti == TRUE) {
+
     if (!javabuilderJarIsOnClasspath()) {
       addJavabuilderJar2Classpath(path, pathsep, filesep, runtimeVersion, searchSubstring)
     }
@@ -509,10 +510,29 @@ unwrapComplexNumericCellArray <- function(arr) {
     row = .jevalArray(arr[[i]])
     for (j in 1:nCols) {
       l = .jevalArray(row[[j]])
-      l = lapply(l, function(x) {as.double(.jevalArray(x, simplify = TRUE))})
-      # for (k in 1:length(l)) {
-      #   l[[k]] = as.double(.jevalArray(l[[k]], simplify = TRUE))
-      # }
+
+##  VT::06.03.2019 - replace lapply() by sapply(). So, the elements of the returned
+##      matrix of lists will contain numercial vectors and not lists of lists with one element.
+##      See IDXMIX and IDXCLA.
+##
+##      l = lapply(l, function(x) {as.double(.jevalArray(x, simplify = TRUE))})
+      l = sapply(l, function(x) {as.double(.jevalArray(x, simplify = TRUE))})
+
+##  VT::06.03.2019 - when MATLAB returns strings as elements of the cell array
+##      (see MIXMIXbs, etc. in tclustICsol), they will be transformed to numerical
+##      arrays containing the byte values of the characters of the strings.
+##      Concretely, tclustICsol() returns "true" or "spurious" as type of
+##      solution in the last column of MIXMIXbs. When these strings represented
+##      as byte arrays are rewarpped and passed to carbikeplot() they will
+##      not be recognized.
+##
+##      It will be good to find a general solution, this is for now a workaround.
+##
+      if(is.logical(yes <- all.equal(strtoi(as.character(charToRaw("true")), 16L), as.vector(l))) && yes)
+            l <- "true"
+      else if(is.logical(yes <- all.equal(strtoi(as.character(charToRaw("spurious")), 16L), as.vector(l))) && yes)
+            l <- "spurious"
+
       retVal[[i, j]] = l;
     }
   }
@@ -555,7 +575,15 @@ rewrapComplexNumericCellArray <- function(arr) {
   for (i in 1:nRows) {
     for (j in 1:nCols) {
       doubleList = arr[i, j]
-      doubleJavaArray2 = .jarray(as.matrix(unlist(arr[[i,j]])), dispatch = TRUE)
+
+##  VT::06.03.2019 - if an element of the matrix is a list with length 0, it will be 'unlisted' to NULL
+##  and the NULL will crash the as.matrix(). Therefore, if the list is with length 0,
+##  create a matrix with 0 rows and 0 columns - this seems tow work
+##
+##      doubleJavaArray2 = .jarray(as.matrix(unlist(arr[[i,j]])), dispatch = TRUE)
+      doubleJavaArray2 = if(length(arr[[i,j]]) == 0) .jarray(matrix(nrow=0, ncol=0), dispatch = TRUE)
+                         else                        .jarray(as.matrix(unlist(arr[[i,j]])), dispatch = TRUE)
+
       index = .jarray(c(as.integer(i), as.integer(j)), "[I", dispatch = TRUE)
       .jcall(cellArray, "V", "set", index, .jcast(doubleJavaArray2, "java/lang/Object"))
     }
@@ -578,4 +606,20 @@ isJavaObject <- function(obj) {
     })
 
   return (result)
+}
+
+## VT::05.03.2019
+## arr is a cell of 3D arrays. Convert the whole to a list of 3D arrays
+##  This is used in tclusteda for the return value of SIGMA.
+##
+cell2list <- function(arr) {
+  nRows = length(arr)
+  nCols = length(arr[[1]])
+
+  retVal = list()
+
+  for(i in 1:nRows)
+    retVal[i] <- .jevalArray(arr[[i]], "[[D", simplify=TRUE)
+
+  return (retVal)
 }
