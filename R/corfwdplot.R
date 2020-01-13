@@ -47,6 +47,24 @@
 #'  (out <- fsmult(hbk[,1:3], monitoring=TRUE))
 #'  corfwdplot(out)
 #'
+#'  (out <- fsmult(hbk[,1:3], monitoring=TRUE))
+#'  corfwdplot(out)
+#'
+#'  (out1 <- smult(hbk, monitoring=TRUE, trace=TRUE))
+#'  corfwdplot(out1)
+#'
+#'  (out2 <- mmmult(hbk[,1:3], monitoring=TRUE, trace=TRUE))
+#'  corfwdplot(out2)
+#'
+#'  (out3 <- fsreg(hbk[,1:3], hbk[,4], monitoring=TRUE, trace=TRUE, method="FS"))
+#'  corfwdplot(out3)
+#'
+#'  (out4 <- fsreg(hbk[,1:3], hbk[,4], monitoring=TRUE, trace=TRUE, method="S"))
+#'  corfwdplot(out4)
+#'
+#'  (out5 <- fsreg(hbk[,1:3], hbk[,4], monitoring=TRUE, trace=TRUE, method="MM"))
+#'  corfwdplot(out5)
+#'
 #'  }
 #'
 #' @export
@@ -104,9 +122,22 @@ corfwdplot <- function(out, trace=FALSE, ...)
     maxc <- max(RHO)
     ylimits <- c(min(minc)*0.8, max(maxc)*1.1)
 
-    rho <- melt(RHO)
-    rho[,1] <- rep(x,3)
-    colnames(rho) <- c("x", "z", "y")
+##  VT::09.01.2020 - avoid melt() and thus the dependence on 'rshape2'
+##      repalce melt() by reshape() from 'stats'
+
+##    rho <- melt(RHO)
+##    rho[,1] <- rep(x,3)
+##    colnames(rho) <- c("x", "z", "y")
+
+##    RHO <- cbind.data.frame(x=x, RHO)
+##    rho <- melt(RHO, id.vars="x", variable.name = "z", value.name="y")
+
+    RHO <- cbind.data.frame(x=x, RHO)
+    lvl <- c("Spearman", "Kendal", "Pearson")
+    rho <- reshape(RHO, varying=lvl, v.names = "y", idvar="x", timevar = "z", times = lvl,
+        new.row.names=1:(length(lvl) * nrow(RHO)), direction = "long")
+    rho$z <- factor(rho$z, levels=lvl)
+
     p <- ggplot(data=rho, aes(x=x, y=y)) +
          geom_line() + facet_grid(z~., scales="free") +
          labs(x=xlab, y="Correlation") +

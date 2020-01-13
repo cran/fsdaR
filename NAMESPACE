@@ -4,11 +4,10 @@
 export(fsreg,
     FSR_control, FSReda_control, Sreg_control, Sregeda_control, MMreg_control, MMregeda_control, LXS_control,
     resfwdplot, mdrplot, resindexplot, levfwdplot,
-    fsmult,
-    smult, mmmult,
+    fsmult, smult, mmmult,
     malfwdplot, mmdplot, malindexplot, corfwdplot,
-    fsmmmdrs, mmdrsplot
-  , tclustfsda, tclustIC, tclustICsol, tclustICplot, carbikeplot
+    fsmmmdrs, mmdrsplot,
+    tclustfsda, tclustIC, tclustICsol, tclustICplot, carbikeplot
     )
 
 importFrom("stats", "pf", "printCoefmat", "pt", "quantile")
@@ -18,9 +17,7 @@ importFrom(stats4, plot, summary)
 importFrom(methods, show)
 importFrom("stats", ".getXlevels", "coef", "is.empty.model",
          "model.matrix", "model.offset", "model.response",
-         "model.weights",
-         "cor")
-importFrom("reshape2", "melt")
+         "model.weights", "cor", "reshape")
 importFrom("ggplot2", "ggplot", "aes", "geom_line", "facet_grid", "labs", "scale_x_reverse", "ylim", "theme_light")
 import(
   rrcov,

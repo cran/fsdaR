@@ -406,7 +406,7 @@ This iterative algorithm initializes \code{k} clusters randomly and performs
 \references{
 Garcia-Escudero, L.A., Gordaliza, A., Matran, C. and Mayo-Iscar, A. (2008).
      A General Trimming Approach to Robust Cluster Analysis. Annals of Statistics,
-     Vol. 36, 1324-1345. [Technical Report available at: \url{www.eio.uva.es/inves/grupos/representaciones/trTCLUST.pdf}]
+     Vol. 36, 1324-1345. [Technical Report available at: \url{http://www.eio.uva.es/inves/grupos/representaciones/trTCLUST.pdf}]
 }
 \author{
 FSDA team, \email{valentin.todorov@chello.at}

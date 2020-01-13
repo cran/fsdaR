@@ -7,7 +7,7 @@
 #'
 #'
 #'
-#' Demographic data frot the 341 miniciplaities in Emilia Romagna (an Italian region).
+#' Demographic data from the 341 miniciplaities in Emilia Romagna (an Italian region).
 #'
 #' A data set containing 28 demographic variables for 341 municipalities in Emilia Romagna (an Italian region).
 #'

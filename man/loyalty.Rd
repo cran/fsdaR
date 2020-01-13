@@ -29,7 +29,7 @@ To find out more about this data set please see Atkinson and Riani (2006), JCGS
 }
 \source{
 The data are themselves a random sample from a larger database. The sample of 509
-observations is available at \url{www.riani.it/ trimmed}.
+observations is available at \url{http://www.riani.it/trimmed}.
 }
 \references{
 Atkinson, A. and Riani, M (2006) Distribution Theory and Simulations for Tests of 

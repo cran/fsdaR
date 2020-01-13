@@ -3,7 +3,7 @@
 \docType{data}
 \name{emilia2001}
 \alias{emilia2001}
-\title{Demographic data frot the 341 miniciplaities in Emilia Romagna (an Italian region).}
+\title{Demographic data from the 341 miniciplaities in Emilia Romagna (an Italian region).}
 \format{A data frame with 341 rows and 28 variables
 The variables are as follows:
 

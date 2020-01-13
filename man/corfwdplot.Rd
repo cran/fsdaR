@@ -49,6 +49,24 @@ Provides a method for obtaining the maximum empirical efficiency
  (out <- fsmult(hbk[,1:3], monitoring=TRUE))
  corfwdplot(out)
 
+ (out <- fsmult(hbk[,1:3], monitoring=TRUE))
+ corfwdplot(out)
+
+ (out1 <- smult(hbk, monitoring=TRUE, trace=TRUE))
+ corfwdplot(out1)
+
+ (out2 <- mmmult(hbk[,1:3], monitoring=TRUE, trace=TRUE))
+ corfwdplot(out2)
+
+ (out3 <- fsreg(hbk[,1:3], hbk[,4], monitoring=TRUE, trace=TRUE, method="FS"))
+ corfwdplot(out3)
+
+ (out4 <- fsreg(hbk[,1:3], hbk[,4], monitoring=TRUE, trace=TRUE, method="S"))
+ corfwdplot(out4)
+
+ (out5 <- fsreg(hbk[,1:3], hbk[,4], monitoring=TRUE, trace=TRUE, method="MM"))
+ corfwdplot(out5)
+
  }
 
 }

@@ -169,43 +169,11 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
   #  parlist <- c(parlist, list(.jnew("java/lang/String", "intercept"), .jnew("java/lang/Double", ifelse(intercept, 1, 0))))
     paramNames = names(control);
     for (i in 1:length(paramNames)) {
-      paramName = paramNames[i];
-      paramValue = control[[i]];
-
-##              if (is.numeric(paramValue) && length(paramValue) == 1) {# Pure scalar
-##                paramValue = as.double(paramValue);
-##                matlabValue = list(.jnew("java/lang/String", paramName), .jnew("java/lang/Double", paramValue))
-##              } else if (is.numeric(paramValue) && length(paramValue) > 1) { # Vector of scalars
-##                matlabValue = list(.jnew("java/lang/String", paramName), .jarray(paramValue, dispatch=TRUE))
-##              } else if (is.character(paramValue) && length(paramValue) == 1) { # Single string # !is.vector(paramVelue)
-##                matlabValue = list(.jnew("java/lang/String", paramName), .jnew("java/lang/String", paramValue))
-##              } else if (is.list(paramValue)) { # List(complex structure))
-##                matlabValue = list(.jnew("java/lang/String", paramName), list2MatlabStruct(paramValue))
-##        #        structmap = structfnp(paramValue)
-##        #        matlabValue = list(.jnew("java/lang/String", paramName), structmap)
-##        #         stop(paste("Param <", paramName, ">'s type cannot (yet) be converted into a MATLAB-friendly type"))
-##              } else if (is.vector(paramValue) && is.character(paramValue)) {
-##        #        cellArr = structfnp(paramValue)
-##        #        matlabValue = list(.jnew("java/lang/String", paramName), cellArr)
-##                 stop(paste("Param <", paramName, ">'s type cannot (yet) be converted into a MATLAB-friendly type"))
-##            } else if (is.vector(paramValue) && is.numeric(paramValue)) {
-##              matlabValue = list(.jnew("java/lang/String", paramName), .jarray(paramValue, dispatch = TRUE)) }
-##              else {
-##              stop(paste("Param <", paramName, ">'s type cannot (yet) be converted into a MATLAB-friendly type"))
-##              }
-
-##      parlist = c(parlist, matlabValue)
-
-            matlabValue = rType2MatlabType(paramName, paramValue)
-            parlist = c(parlist, .jnew("java/lang/String", paramName), matlabValue)
+        paramName = paramNames[i]
+        paramValue = control[[i]]
+        matlabValue = rType2MatlabType(paramName, paramValue)
+        parlist = c(parlist, .jnew("java/lang/String", paramName), matlabValue)
     }
-
-    # Chiamata alla funzione FSDA compilata in MATLAB
-    # out = .jcall(fsdaEngine,
-    #              "[Ljava/lang/Object;",
-    #              "FSR",
-    #              as.integer(1),     # Numero di output restituiti dalla funzione MATLAB
-    #              .jarray(parlist))  # Lista di parametri in ingresso
 
     if(!monitoring)
     {
@@ -312,6 +280,8 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
         else if(outclass=="fsrheda")            callFsdaFunction("FSRHeda", "[Ljava/lang/Object;", 1, parlist)
         else if(outclass=="sregeda")            callFsdaFunction("Sregeda", "[Ljava/lang/Object;", 1, parlist)
         else if(outclass=="mmregeda")           callFsdaFunction("MMregeda", "[Ljava/lang/Object;", 1, parlist)
+        else if(outclass=="fsdalms" || outclass=="fsdalts")
+            stop("Methods 'LMS' and 'LTS' are not defined with monitoring option")
         else
             stop(paste("Undefined method: ", method))
 

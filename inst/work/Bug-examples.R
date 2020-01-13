@@ -20,7 +20,7 @@ resfwdplot(out, fg.col="red", fg.lty="dotdash")
 ##
 ##  fsmult() with geyser data from MASS
 
---- Code Example A ---
+## --- Code Example A ---
 library(fsdaR)
 data(geyser2)
 
@@ -37,7 +37,7 @@ out <- fsmult(geyser)       # 2. Will throw an exception
 out <- fsmult(matrix(rnorm(299*2), ncol=2))     # 3. Works OK
 out <- fsmult(geyser2)                          # 4. Works OK
 
---- Code Example B ---
+## --- Code Example B ---
 library(fsdaR)
 
 library(MASS)
