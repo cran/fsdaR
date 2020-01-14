@@ -1,5 +1,10 @@
-2020-01-09  Valentin Todorov  <valentin.todorov@chello.at>
+2020-01-13  Valentin Todorov  <valentin.todorov@chello.at>
     *
+    * DESCRIPTION (Version): 0.4-09: message about installation/missing of MCR on 
+    *   Linux and MacOs fixed. Message for not supported platform fixed - see function
+    *   get_os() in R\internal.R
+    *
+    * DESCRIPTION (Version): 0.4-08: several URIs fixed
     * DESCRIPTION (Version): 0.4-07: package 'reshape2' removed from imports
     *
 

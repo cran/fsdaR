@@ -234,6 +234,37 @@ sourceFolder <- function(folder, recursive = FALSE, ...)
     return(TRUE)
 }
 
+##  VT::13.01.2020
+## Find out on which operating system we are running.
+##  See https://www.r-bloggers.com/identifying-the-os-from-r/
+##
+##  The package 'fsdaR' supports Windows, Linux and MacOs (i.e. MATLAB
+##      MCR exists only for these platforms).
+##
+##  Return: "windows", "osx", "linux", anything else
+##
+get_os <- function(){
+
+    sysinf <- Sys.info()
+    if(!is.null(sysinf))
+    {
+        os <- sysinf['sysname']
+        if(os == 'Darwin')
+            os <- "osx"
+    } else
+    {   ## mystery machine
+        os <- .Platform$OS.type
+        if(grepl("^darwin", R.version$os))
+            os <- "osx"
+        if(grepl("^solaris", R.version$os))
+            os <- "sunos"
+        if(grepl("linux-gnu", R.version$os))
+            os <- "linux"
+    }
+    tolower(os)
+}
+
+
 ## Check if the Matlab Runtime module is installed and stop if not.
 ##
 checkRuntimeStop <- function()
@@ -250,10 +281,10 @@ checkRuntime <- function()
 {
   ## Do the check for installed Matlab runtime
 
-##  VT::27.06.2018: update the MCR to V91 (R2016b)
+##  ES::12.06.2019: update the MCR to V96 (R2019a)
 ##
 ##  runtimeVersion = "v90" # R2015b
-  runtimeVersion = "v91" # R2016b
+  runtimeVersion = "v96" # R2019a
 
   ## Three ways to check the host OS in R. Though Linux will be the most used
   ## platform (together with Windows), I would prefer the one returning a
@@ -270,45 +301,52 @@ checkRuntime <- function()
   # "Linux"
   ## Do the check for installed Matlab runtime
 
-  hostOs = .Platform$OS.type
+##  VT::13.01.2020
+##  hostOs = .Platform$OS.type
+  hostOs = get_os()
+
   path = ""
   pathsep = ""
   filesep = ""
   searchSubstring = "" # vector(mode="character", length=0)
-  if (hostOs == "unix") {
+  if(hostOs == "linux" || hostOs == "osx") {
     path = Sys.getenv("LD_LIBRARY_PATH")
     pathsep = ":"
     filesep = "/"
     searchSubstring = paste("/", runtimeVersion, "/runtime/glnxa64", sep = "")
-  } else if (hostOs == "windows") {
+  } else if(hostOs == "windows") {
     path = Sys.getenv("PATH")
     pathsep = ";"
     filesep = "\\"
     searchSubstring = paste("\\", runtimeVersion, "\\runtime\\win64", sep = "")
   }
   else {
-    stop("Unknown host operating system type!")
+    stop(paste("Not supported operating system:", hostOs, "- no MATLAB Runtime Compiler (MCR) exists for your platform!"))
   }
 
-  # rti = (grep(searchSubstring, path,  fixed=TRUE) > 0)
-  # rti = FALSE
-  # for (ss in searchSubstrings) {
-  #   rti = rti || (grep(ss, path,  fixed=TRUE) > 0)
-  # }
   rti = grepl(searchSubstring, path,  fixed=TRUE) > 0
+
   if (rti == TRUE) {
 
     if (!javabuilderJarIsOnClasspath()) {
       addJavabuilderJar2Classpath(path, pathsep, filesep, runtimeVersion, searchSubstring)
     }
   } else {
-    cat("\n!! Your installation does not contain the correct Matlab Runtime module.",
-        "\nRequired is R2016b (9.1).\n",
-        "\nIn order to enable execution of MATLAB files on systems without",
-        "\nan installed version of MATLAB you need to install the Matlab Runtime.",
-        "\n\nDownload and install the required version of the MATLAB Runtime - R2016b (9.1) - ",
-##        "\nfrom the Web at http://www.mathworks.com/products/compiler/mcr.\n\n")
-        "\n from http://ssd.mathworks.com/supportfiles/downloads/R2016b/deployment_files/R2016b/installers/win64/MCR_R2016b_win64_installer.exe\n\n")
+    if(hostOs == "windows")
+        cat("\n!! Your installation does not contain the correct Matlab Runtime module.",
+            "\nRequired is R2019a (9.6).\n",
+            "\nIn order to enable execution of MATLAB files on systems without",
+            "\nan installed version of MATLAB you need to install the Matlab Runtime.",
+            "\n\nDownload the required version of the MATLAB Runtime - R2019a (aka 9.6) - ",
+            "\n from http://ssd.mathworks.com/supportfiles/downloads/R2019a/Release/2/deployment_files/installer/complete/win64/MATLAB_Runtime_R2019a_Update_2_win64.zip\n\n",
+            "\n Then, uncompress the above zip archive to a local folder and run 'setup.exe' to install the runtime.\n\n")
+    else
+        cat("\n!! Your installation does not contain the correct Matlab Runtime module.",
+            "\nRequired is R2019a (9.6).\n",
+            "\nIn order to enable execution of MATLAB files on systems without",
+            "\nan installed version of MATLAB you need to install the Matlab Runtime.",
+            "\n\nDownload and install the required version of the MATLAB Runtime - R2019a (aka 9.6) - ",
+            "\nfrom the Web at http://www.mathworks.com/products/compiler/mcr.\n\n")
   }
 
   return(rti)

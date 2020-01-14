@@ -1,5 +1,5 @@
-6f1400c95fc3051de6607b5d789169b2 *ChangeLog
-d0185911bf7332696046945fff19c1a7 *DESCRIPTION
+ce17b85c4e22b19aced95fcc2b68f763 *ChangeLog
+c551bea9370f5fb86be3115618f80a43 *DESCRIPTION
 8d4ae4b570629f0da52ce9eb82d75e30 *NAMESPACE
 40dbb920c8044d1edbe7eb3ccbcdb279 *R/FSR_control.R
 f8d5dd8b6bdb71be97dfc7df5f0a9733 *R/Sreg_control.R
@@ -12,7 +12,7 @@ a4d0a852f5076a77d94cce809ada9d5f *R/corfwdplot.R
 f6c368dcdf90efb4109fab85e92e491a *R/fsreg-methods.R
 d11cd69394085b939ac9893571ffcf69 *R/fsreg.R
 c3069b07825ed3d171676d47e2d3e36e *R/getos.R
-e38ee0425763463566040c2546bf4c6e *R/internal.R
+5f26ca03cfac3d518057f516f3cda88c *R/internal.R
 fab510d428fcfd44c0d16d34a6c2a962 *R/levfwdplot.R
 ef962a6e694bd872efdf88dcb4e96e51 *R/malfwdplot.R
 fbc4cacbc23a7692f6af1eeb5f94e4b7 *R/malindexplot.R
@@ -38,8 +38,8 @@ fbb25bb2d6eb9a186798340aa18e459c *data/geyser2.rda
 3bec7ab5c609b416a37dbe6f204c76c3 *data/loyalty.rda
 2b3405e9377c96913fb81652fc4f3856 *data/swissbanknotes.rda
 e131a2f9e27252a01d93acfece6eeebc *data/swissheads.rda
-cf136d573359c2b6be6555fde48cc038 *inst/java/fsda4java.jar
-940f6233ad3e41d2514c5c560de01025 *inst/java/r_fsda.jar
+e50ae6fca8c6931dca4e4028f3991881 *inst/java/fsda4java.jar
+480af9a2b87c868f48c91d88f38975e1 *inst/java/r_fsda.jar
 b019c6570c87f0553391bcde10bd5875 *inst/work/Bug-examples.R
 18ae2c700519f1ca5441ea7da40445e9 *inst/work/carbike-example-3.R
 b52bd36d1f84f572938ef3b6b2697c60 *inst/work/create-datasets.R
