@@ -4,9 +4,19 @@
 \alias{fsmmmdrs}
 \title{Performs random start monitoring of minimum Mahalanobis distance}
 \usage{
-fsmmmdrs(x, plot = FALSE, init, bsbsteps, nsimul = 200,
-  nocheck = FALSE, numpool, cleanpool = FALSE, msg = FALSE,
-  trace = FALSE, ...)
+fsmmmdrs(
+  x,
+  plot = FALSE,
+  init,
+  bsbsteps,
+  nsimul = 200,
+  nocheck = FALSE,
+  numpool,
+  cleanpool = FALSE,
+  msg = FALSE,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{An n x p data matrix (n observations and p variables).

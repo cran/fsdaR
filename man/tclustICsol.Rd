@@ -4,9 +4,17 @@
 \alias{tclustICsol}
 \title{Extracts a set of best relevant solutions obtained by \code{\link{tclustIC}}}
 \usage{
-tclustICsol(out, NumberOfBestSolutions = 5, ThreshRandIndex = 0.7,
-  whichIC = c("ALL", "CLACLA", "MIXMIX", "MIXCLA"), Rand = TRUE,
-  msg = TRUE, plot = FALSE, trace = FALSE, ...)
+tclustICsol(
+  out,
+  NumberOfBestSolutions = 5,
+  ThreshRandIndex = 0.7,
+  whichIC = c("ALL", "CLACLA", "MIXMIX", "MIXCLA"),
+  Rand = TRUE,
+  msg = TRUE,
+  plot = FALSE,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{out}{An S3 object of class \code{\link{tclustic.object}}

@@ -4,10 +4,41 @@
 \alias{malfwdplot}
 \title{Plots the trajectories of scaled Mahalanobis distances along the search}
 \usage{
-malfwdplot(out, xlim, ylim, xlab, ylab, main, lwd, lty, col, cex.lab,
-  cex.axis, subsize, fg.thresh, fg.unit, fg.labstep, fg.lwd, fg.lty,
-  fg.col, fg.mark, fg.cex, bg.thresh, bg.style, standard, fground, bground,
-  tag, datatooltip, label, nameX, databrush, conflev, trace = FALSE, ...)
+malfwdplot(
+  out,
+  xlim,
+  ylim,
+  xlab,
+  ylab,
+  main,
+  lwd,
+  lty,
+  col,
+  cex.lab,
+  cex.axis,
+  subsize,
+  fg.thresh,
+  fg.unit,
+  fg.labstep,
+  fg.lwd,
+  fg.lty,
+  fg.col,
+  fg.mark,
+  fg.cex,
+  bg.thresh,
+  bg.style,
+  standard,
+  fground,
+  bground,
+  tag,
+  datatooltip,
+  label,
+  nameX,
+  databrush,
+  conflev,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{out}{An object of S3 class \code{\link{fsmeda.object}} returned by
@@ -17,8 +48,7 @@ malfwdplot(out, xlim, ylim, xlab, ylab, main, lwd, lty, col, cex.lab,
  The needed elements of \code{out} are
    \enumerate{
        \item \code{MAL}: matrix containing the squared Mahalanobis distances monitored in each
-         step of the forward search. Every row is associated with a unit (row of data matrix Y).
-         This matrix can be created using function FSMeda (mandatory argument)
+         step of the forward search. Every row is associated with a unit (row of data matrix X).
        \item \code{Un}: matrix containing the order of entry of each unit
                (necessary if datatooltip or databrush is selected).
        \item \code{X}: The data matrix.
@@ -32,7 +62,7 @@ minimum and maximum on the \code{y}-axis. Default is to use automatic scale.}
 
 \item{xlab}{A title for the x axis}
 
-\item{ylab}{A title for the y axis}
+\item{ylab}{A title for the y axis, deafult is "Squared Mahalanobis distances".}
 
 \item{main}{An overall title for the plot}
 

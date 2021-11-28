@@ -4,8 +4,16 @@
 \alias{mmmult}
 \title{Computes MM estimators in multivariate analysis with auxiliary S-scale}
 \usage{
-mmmult(x, monitoring = FALSE, plot = FALSE, eff, conflev = 0.975,
-  nocheck = FALSE, trace = FALSE, ...)
+mmmult(
+  x,
+  monitoring = FALSE,
+  plot = FALSE,
+  eff,
+  conflev = 0.975,
+  nocheck = FALSE,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{An n x p data matrix (n observations and p variables).
@@ -32,9 +40,10 @@ If plot is a list it may contain the following fields:
 
 \item{eff}{Defining the nominal efficiency (i.e. a number between 0.5 and 0.99). The default value is \code{eff=0.95}.}
 
-\item{conflev}{confidence interval for the horizontal bands. It can be a vector of
-different confidence level values, e.g. c(0.95, 0.99, 0.999).
-The confidence interval is based on the chi^2 distribution.}
+\item{conflev}{Confidence level which is used to declare units as outliers (scalar).
+Usually \code{conflev=0.95}, \code{conflev=0.975} or \code{conflev=0.99} (individual alpha)
+\code{conflev=1-0.05/n}, \code{conflev=1-0.025/n} or \code{conflev=1-0.01/n} (simultaneous alpha).
+Default value is \code{convlev=0.975}.}
 
 \item{nocheck}{It controls whether to perform checks on matrix Y. If \code{nocheck=TRUE}, no check is performed.}
 

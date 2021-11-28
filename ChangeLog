@@ -1,11 +1,33 @@
-2020-01-13  Valentin Todorov  <valentin.todorov@chello.at>
+2021-11-14  Valentin Todorov  <valentin.todorov@chello.at>
     *
-    * DESCRIPTION (Version): 0.4-09: message about installation/missing of MCR on 
-    *   Linux and MacOs fixed. Message for not supported platform fixed - see function
-    *   get_os() in R\internal.R
+    * DESCRIPTION (Version): 0.6-5:
+    * inst/java/JARS - fixed the error in fsmmmdrs(): Unrecognized function or variable 'progbar'
     *
-    * DESCRIPTION (Version): 0.4-08: several URIs fixed
-    * DESCRIPTION (Version): 0.4-07: package 'reshape2' removed from imports
+    * DESCRIPTION (Version): 0.6-4:
+    * Data/poison.rda - Added data set poison
+    * Data/flea.rda - Added data set flea
+    * R/tclustICsol.R - fixed a bug, alpha was not passed in the output object and carbike() was crashing.
+
+    * DESCRIPTION (Version): 0.5-5:
+    * Upgraded to the newest MATLAB runtime: MCR V9.10 (R2021a)
+    *
+    * DESCRIPTION (Version): 0.5-4:
+    * DESCRIPTION (Version): 0.5-2:
+    * DESCRIPTION (Version): 0.5-1:
+    * DESCRIPTION (Version): 0.5-00 : MCR V96
+    *
+    * Upgraded to the newest MATLAB runtime: MCR V9.6 (R2019a)
+    * Added functions covplot(), spmplot() and regspmplot()
+    * Improved the interface of the functions resindexplot() and malindexplot()
+    * Added data sets \code{X} and \code{fisheries}.
+    * Added function tclustreg()
+    *
+
+2020-01-14  Valentin Todorov  <valentin.todorov@chello.at>
+    *
+    * DESCRIPTION (Version): 0.4-9:
+    *
+    * Upgraded to the newest MATLAB runtime: MCR V9.6 (R2019a)
     *
 
 2019-03-13  Valentin Todorov  <valentin.todorov@chello.at>

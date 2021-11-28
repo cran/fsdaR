@@ -4,9 +4,28 @@
 \alias{mmdplot}
 \title{Plots the trajectory of minimum Mahalanobis distance (mmd)}
 \usage{
-mmdplot(out, quant = c(0.01, 0.5, 0.99), mplus1 = FALSE, envm, lwd,
-  lwdenv, xlim, ylim, tag, datatooltip, label, xlab, ylab, main, nameX,
-  cex.lab, cex.axis, databrush, trace = FALSE, ...)
+mmdplot(
+  out,
+  quant = c(0.01, 0.5, 0.99),
+  mplus1 = FALSE,
+  envm,
+  lwd,
+  lwdenv,
+  xlim,
+  ylim,
+  tag,
+  datatooltip,
+  label,
+  xlab,
+  ylab,
+  main,
+  nameX,
+  cex.lab,
+  cex.axis,
+  databrush,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{out}{An object of S3 class \code{\link{fsmeda.object}} returned by

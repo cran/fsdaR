@@ -238,7 +238,7 @@ fsmult <- function(x, bsb, monitoring = FALSE, crit=c("md", "biv","uni"), rf=0.9
 
     control$plots <- xplots
 
-    ## If monitoring, bsb is mandatory (in FSMeda())and bsb=0 if bsb is missing
+    ## If monitoring, bsb is mandatory (in FSMeda()) and bsb=0 if bsb is missing
     bsb <- if(!missing(bsb)) bsb else if(monitoring) 0 else p+1
     if(monitoring)
     {
@@ -308,6 +308,9 @@ fsmult <- function(x, bsb, monitoring = FALSE, crit=c("md", "biv","uni"), rf=0.9
         loc = as.vector(as.matrix(.jevalArray(arr$get("loc", as.integer(1)), "[[D", simplify = TRUE)))
         cov = as.matrix(.jevalArray(arr$get("cov", as.integer(1)), "[[D", simplify = TRUE))
         md = as.vector(as.matrix(.jevalArray(arr$get("md", as.integer(1)), "[[D", simplify = TRUE)))
+
+        if(length(loc) == 0)
+            stop("Matrix is singular!")
 
         if(as.integer(arr$hasField("weights", as.integer(1))) == 1) {
             weights = as.matrix(.jevalArray(arr$get("weights", as.integer(1)), "[[D", simplify = TRUE))

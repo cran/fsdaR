@@ -69,7 +69,7 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
         family = c("homo", "hetero", "bayes"),
 		method = c("FS", "S", "MM", "LTS", "LMS"),
         monitoring = FALSE,
-        control, ...)
+        control, trace=FALSE, ...)
 {
     family <- match.arg(family)
     method <- match.arg(method)
@@ -83,7 +83,7 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
     outclass <- control$outclass
     control$outclass <- NULL
 
-    if(!is.null(control$intercept) & control$intercept==0)
+    if(!is.null(control$intercept) && control$intercept == 0)
         intercept <- FALSE
 
     ## Check if the control corresponds to the parameter supplied: monitoring, family and method:
@@ -122,7 +122,7 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
     n <- nrow(x)
     p <- ncol(x)
 
-    if(missing(bsb) & monitoring)
+    if((missing(bsb) || is.null(bsb)) && monitoring)
         bsb <- 0
 
 ##
@@ -134,20 +134,26 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
 ##  if(missing(nsamp))
 ##        nsamp <- 1000
 
-  # Richiamo del riferimento alle librerie di MATLAB compilate in Java
-  # fsdaEngine = get("fsdaEngine", envir = .GlobalEnv)
+    # Richiamo del riferimento alle librerie di MATLAB compilate in Java
+    # fsdaEngine = get("fsdaEngine", envir = .GlobalEnv)
 
-  # Add monitoring parameters
-  if(!monitoring) {
-    parlist = c(.jarray(y, dispatch=TRUE), .jarray(x, dispatch=TRUE))
-  }
-  else {
-    if (outclass=="sregeda" | outclass=="mmregeda")
-      parlist = c(.jarray(y, dispatch=TRUE), .jarray(x, dispatch=TRUE))
-    else
-      parlist = c(.jarray(y, dispatch=TRUE), .jarray(x, dispatch=TRUE), .jarray(bsb, dispatch=TRUE))
-  }
+    # Add monitoring parameters
+    if(!monitoring) {
+        parlist <- c(.jarray(y, dispatch=TRUE), .jarray(x, dispatch=TRUE))
+    }
+    else {
+        parlist  <- if(outclass=="sregeda" | outclass=="mmregeda")
+                        c(.jarray(y, dispatch=TRUE), .jarray(x, dispatch=TRUE))
+                    else
+                        c(.jarray(y, dispatch=TRUE), .jarray(x, dispatch=TRUE), .jarray(bsb, dispatch=TRUE))
+    }
 
+
+    if(trace)
+    {
+        cat("\nOptional parameters: \n")
+        print(control)
+    }
 
   # Conversione e controllo dei parametri opzionali:
   # 1) Controllo esistenza del parametro opzionale
@@ -167,7 +173,7 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
   #
 
   #  parlist <- c(parlist, list(.jnew("java/lang/String", "intercept"), .jnew("java/lang/Double", ifelse(intercept, 1, 0))))
-    paramNames = names(control);
+    paramNames = names(control)
     for (i in 1:length(paramNames)) {
         paramName = paramNames[i]
         paramValue = control[[i]]
@@ -191,6 +197,12 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
 
         arr1 = .jcast(out[[1]], "com/mathworks/toolbox/javabuilder/MWStructArray")
         arr = .jnew("org/jrc/ipsc/globesec/sitaf/fsda/FsdaMWStructArray", arr1)
+
+        if(trace)
+        {
+            cat("\nReturning from MATLAB - Fields returned by MATLAB: \n")
+            print(arr$fieldNames())
+        }
 
         # Conversione dei risultati da oggetti Java a tipi di dati R
         # Gli struct di MATLAB vengono convertiti in "list" di R
@@ -290,6 +302,12 @@ fsreg.default <- function(x, y, bsb, intercept = TRUE,
 
         arr1 = .jcast(out[[1]], "com/mathworks/toolbox/javabuilder/MWStructArray")
         arr = .jnew("org/jrc/ipsc/globesec/sitaf/fsda/FsdaMWStructArray", arr1)
+
+        if(trace)
+        {
+            cat("\nReturning from MATLAB - Fields returned by MATLAB: \n")
+            print(arr$fieldNames())
+        }
 
         RES = as.matrix(.jevalArray(arr$get("RES", as.integer(1)), "[[D", simplify = TRUE))
         ans = list(call=match.call(), intercept=intercept, RES=RES,

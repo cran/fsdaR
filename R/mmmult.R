@@ -38,9 +38,10 @@
 #'          the labels which are added are Y1, ...Yp.
 #'      }
 #'
-#' @param conflev confidence interval for the horizontal bands. It can be a vector of
-#'  different confidence level values, e.g. c(0.95, 0.99, 0.999).
-#'  The confidence interval is based on the chi^2 distribution.
+#' @param conflev Confidence level which is used to declare units as outliers (scalar).
+#'  Usually \code{conflev=0.95}, \code{conflev=0.975} or \code{conflev=0.99} (individual alpha)
+#'  \code{conflev=1-0.05/n}, \code{conflev=1-0.025/n} or \code{conflev=1-0.01/n} (simultaneous alpha).
+#'  Default value is \code{convlev=0.975}.
 #'
 #' @param nocheck It controls whether to perform checks on matrix Y. If \code{nocheck=TRUE}, no check is performed.
 
@@ -160,6 +161,8 @@ mmmult <- function(x, monitoring = FALSE, plot=FALSE,
         control$eff <- eff
 
     control$nocheck <- ifelse(nocheck, 1, 0)
+    if(length(conflev) != 1)
+        stop("Argument 'conflev' must be a scalar!")
     control$conflev <- conflev
 
     outclass <- if(monitoring) "mmmulteda" else "mmmult"
@@ -260,7 +263,7 @@ mmmult <- function(x, monitoring = FALSE, plot=FALSE,
         Outliers <- if(as.integer(arr$hasField("Outliers", as.integer(1))) != 1) NULL
                         else as.matrix(.jevalArray(arr$get("Outliers", as.integer(1)), "[[D", simplify = TRUE))
 
-        ans = list(call=match.call(), Loc=Loc, Shape=Shape, Scale=Scale, cov=cov, Weights=Weights, Outliers=Outliers, MAL=MAL, X=x)
+        ans = list(call=match.call(), Loc=Loc, Shape=Shape, Scale=Scale, Cov=Cov, Weights=Weights, Outliers=Outliers, MAL=MAL, X=x)
 
         ans$bs <- if(as.integer(arr$hasField("bs", as.integer(1))) != 1) NULL
                    else as.vector(as.matrix(.jevalArray(arr$get("bs", as.integer(1)), "[[D", simplify = TRUE)))

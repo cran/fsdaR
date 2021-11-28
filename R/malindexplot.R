@@ -14,7 +14,8 @@
 #'  \code{\link{fsmult}} or \code{\link{smult}} or \code{\link{mmmult}} -
 #'  a list containing the monitoring of minimum Mahalanobis distance
 #'
-#' @param p If \code{out} is a vector, p is its length (i.e. number of variables).
+#' @param p If \code{out} is a vector, p is the number of variables of the
+#'  original data matrix which have been used to compute md.
 #'
 #' @param xlab A title for the x axis
 #' @param ylab A title for the y axis
@@ -26,6 +27,14 @@
 #' @param conflev confidence interval for the horizontal bands. It can be a vector of
 #'  different confidence level values, e.g. c(0.95, 0.99, 0.999).
 #'  The confidence interval is based on the chi^2 distribution.
+#'
+#' @param numlab Number of points to be labeled in the plot. If \code{numlab} is a
+#'  single number, e.g. \code{numlab]k}, the units with the \code{k} largest
+#'  md are labelled in the plots. If \code{numlab} is a vector, the units indexed
+#'  by the vector are labelled in the plot. Default is \code{numlab=5}, i.e. the 5 units
+#'  units with the largest md are labelled. Use \code{numlab=""} for no labelling.
+#'
+#' @param tag Tag of the figure which will host the malindexplot. The default tag is \code{tag="pl_malindex"}.
 #'
 #' @param trace Whether to print intermediate results. Default is \code{trace=FALSE}.
 #'
@@ -50,10 +59,13 @@
 #' @export
 #' @author FSDA team, \email{valentin.todorov@@chello.at}
 
-malindexplot <- function(out, p, xlab, ylab, main, nameX,
-        conflev,
-##xlim, ylim, numlab, indlab,
-##    cex.axis, cex.lab, lwd, tag, col, cex, databrush,
+malindexplot <- function(out, p, xlab, ylab, main, nameX, conflev,
+##  xlim, ylim,
+        numlab,
+##  cex.axis, cex.lab, lwd,
+        tag,
+##  col, cex, databrush,
+
         trace=FALSE, ...)
 {
     md <- NULL
@@ -100,11 +112,28 @@ malindexplot <- function(out, p, xlab, ylab, main, nameX,
         control$conflev <- 0.975
     }
 
+    if(!missing(numlab))
+    {
+
+        if(is.null(numlab))
+            numlab <- ""
+        if(length(numlab) == 1 && numlab == 0)
+            numlab <- ""
+        if(length(numlab) > 1 || numlab != "")
+            numlab <- as.numeric(numlab)
+        if(numlab != "" && any(numlab <= 0))
+            stop("Index in 'numlab' cannot be negative or 0!")
+        if(length(numlab) == 1 && is.numeric(numlab))       ## number of labels, set it as negative
+            numlab <- -numlab
+
+        control$numlab <- numlab
+    }
+
+    if(!missing(tag))
+        control$tag <- as.character(tag)
 
 if(FALSE)
 {
-    if(!missing(tag))
-        control$tag <- as.character(tag)
     if(!missing(x))
     {
         if(length(x) != length(outStr$residuals))
@@ -131,30 +160,7 @@ if(FALSE)
             stop("Value of 'lwd'should be greater than 0!")
         control$lwdenv <- lwd
     }
-    if(!missing(numlab))
-    {
-        if(is.null(numlab))
-            numlab <- ""
-        if(length(numlab) == 1 && numlab == 0)
-            numlab <- ""
-        if(length(numlab) > 1 || numlab != "")
-            numlab <- as.numeric(numlab)
-        if(numlab != "" && any(numlab <= 0))
-            stop("Index in 'numlab' cannot be negative or 0!")
-        if(length(numlab) == 1 && is.numeric(numlab))       ## number of labels, set it as negative
-            numlab <- -numlab
 
-        control$numlab <- numlab
-    }
-    if(!missing(indlab)) {
-        if(!missing(numlab))
-            warning("Both 'numlab' and 'indlab' are specified. The latter will be ignored.")
-        else{
-            control$numlab <- as.numeric(indlab)
-            if(any(control$numlab <= 0))
-                stop("Index in 'indlab' cannot be negative or 0!")
-        }
-    }
 
     if(!missing(cex.axis))
     {
@@ -217,7 +223,7 @@ if(FALSE)
     }
 
     matlabParams <- parlist
-    callFsdaFunctionNoArgout("malindexplot", "[Ljava/lang/Object;", matlabParams)
+    callFsdaFunction("malindexplot", "[Ljava/lang/Object;", 1, matlabParams)
     # if(is.null(matlabResult))
     #     return(NULL)
 

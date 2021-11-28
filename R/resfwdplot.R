@@ -80,12 +80,19 @@ resfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
     {
         ## the default:
         ## standard$xvalues <- (dim(out$RES)[1]-dim(out$RES)[2]+1):dim(out$RES)[1]
-        standard$xvalues <- xvalues
-    }
+
+        ## VT::11.08.2020 - MATLAB wants doubles
+        standard$xvalues <- as.double(xvalues)
+   }
 
     if(length(standard) > 0)
-        control$standard <- standard
+    {
+        ## VT::11.08.2020 - MATLAB wants doubles
+         if(!is.null(standard$xvalues))
+            standard$xvalues <- as.double(standard$xvalues)
 
+        control$standard <- standard
+    }
     if(missing(fground))
         fground <- list()
     if(!missing(fg.thresh))
@@ -322,7 +329,7 @@ mapLineStyle <- function(lty)
 mapColor <- function(col)
 {
     col <- sapply(col, .mapColor)
-    if(length(col) == 1 & col != "none" & col != "auto")
+    if(length(col) == 1 && col != "none" && col != "auto")
         col[[2]] <- col[[1]]
 
     col

@@ -4,8 +4,16 @@
 \alias{tclustICplot}
 \title{Plots information criterion as a function of \code{c} and \code{k}, based on the solutions obtained by \code{\link{tclustIC}}}
 \usage{
-tclustICplot(out, whichIC = c("ALL", "MIXMIX", "MIXCLA", "CLACLA"), tag,
-  datatooltip, databrush, nameY, trace = FALSE, ...)
+tclustICplot(
+  out,
+  whichIC = c("ALL", "MIXMIX", "MIXCLA", "CLACLA"),
+  tag,
+  datatooltip,
+  databrush,
+  nameY,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{out}{An S3 object of class \code{\link{tclustic.object}}

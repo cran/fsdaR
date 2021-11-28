@@ -15,8 +15,7 @@
 #'  The needed elements of \code{out} are
 #'    \enumerate{
 #'        \item \code{MAL}: matrix containing the squared Mahalanobis distances monitored in each
-#'          step of the forward search. Every row is associated with a unit (row of data matrix Y).
-#'          This matrix can be created using function FSMeda (mandatory argument)
+#'          step of the forward search. Every row is associated with a unit (row of data matrix X).
 #'        \item \code{Un}: matrix containing the order of entry of each unit
 #'                (necessary if datatooltip or databrush is selected).
 #'        \item \code{X}: The data matrix.
@@ -29,7 +28,7 @@
 #'      minimum and maximum on the \code{x}-axis. Default is to use automatic scale.
 #'
 #' @param xlab A title for the x axis
-#' @param ylab A title for the y axis
+#' @param ylab A title for the y axis, deafult is "Squared Mahalanobis distances".
 #' @param main An overall title for the plot
 #' @param lwd The line width, a positive number, defaulting to 1
 #' @param lty The line type. Line types can either be specified as an integer (1=solid (default), 2=dashed,
@@ -222,7 +221,7 @@ malfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
     ## The R class name is mapped to a Matlab class name
     outStr <- list(MAL=out$MAL, Loc=out$Loc, Y=out$X, class=getMatlabClass(class(out)))
 
-    ## The following are only in FSR
+    ## The following are only in FSM
     if(!is.null(out$Un))
         outStr$Un <- out$Un
     if(!is.null(out$Bols))
@@ -251,6 +250,8 @@ malfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
         standard$labx <- xlab
     if(!missing(ylab))
         standard$laby <- ylab
+    else
+        standard$laby <- "Squared Mahalanobis distances"
     if(!missing(main))
         standard$titl <- main
     if(!missing(lwd))

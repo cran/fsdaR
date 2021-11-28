@@ -2,7 +2,7 @@
 \alias{swissheads}
 \docType{data}
 \title{
-    Swiss banknote data
+    Swiss heads data
 }
 \description{
 Six dimensions in millimetres of the heads of 200 twenty year old Swiss soldiers (Flury and Riedwyl, 

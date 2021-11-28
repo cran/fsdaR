@@ -9,9 +9,9 @@ containing various control parameters.
 }
 \usage{
 FSR_control(intercept = TRUE, h, nsamp = 1000, lms = 1, init, nocheck = FALSE, 
-    bonflev = "", msg = TRUE, bsbmfullrank = 1, 
-    plot = FALSE, bivarfit = "", multivarfit = "", 
-    labeladd = "", nameX, namey, ylim, xlim)
+    bonflev = "", msg = TRUE, bsbmfullrank = TRUE, 
+    plot = FALSE, bivarfit = FALSE, multivarfit = FALSE, 
+    labeladd = FALSE, nameX, namey, ylim, xlim)
 }
 \arguments{
   \item{intercept}{

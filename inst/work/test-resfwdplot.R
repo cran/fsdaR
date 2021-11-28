@@ -1,14 +1,3 @@
-## MATLAB example for resfwdplot
-##
-##  n=100;
-##  y=randn(n,1);
-##  X=randn(n,4);
-##  [out]=LXS(y,X,'nsamp',1000);
-##  [out]=FSReda(y,X,out.bs);
-##  resfwdplot(out);
-
-detach(name="package:fsdaR", unload=TRUE)
-
 library(fsdaR)
 
 ## 1. Exactly as in Matlab, no optional parameters
@@ -44,18 +33,20 @@ resfwdplot(out, standard=list(SizeAxesLab=20))          ## cex.lab  - no error, 
 resfwdplot(out, standard=list(xlim=c(30,100)))          ## xlim     - OK
 resfwdplot(out, standard=list(ylim=c(-10,10)))          ## ylim     - OK
 
-## Numeric vector of length(size(out.RES,2)) controlling the x axis coordinates. The default value of xvalues is size(out.RES,1)-size(out.RES,2)+1:size(out.RES,1)
+## Does it really work ????
+## Numeric vector of length(size(out.RES, 2)) controlling the x axis coordinates.
+##  The default value of xvalues is size(out.RES, 1) - size(out.RES, 2) + 1:size(out.RES, 1)
 xvec <- (dim(out$RES)[1] - dim(out$RES)[2] + 1):dim(out$RES)[1]
-resfwdplot(out, standard=list(xvalues=xvec))                ## xvalues (the default) - !!! throws an exception
-resfwdplot(out, standard=list(xvalues=1:dim(out$RES)[2]))   ## xvalues (another valid value) - !!! throws an exception
+resfwdplot(out, standard=list(xvalues=xvec))                ## xvalues (the default) - OK (xvalues is converted internally to double)
+resfwdplot(out, standard=list(xvalues=1:dim(out$RES)[2]))   ## xvalues (another valid value) - OK
 
 ## Single strings - OK
 resfwdplot(out, standard=list(titl="My test title"))    ## main     - OK
 resfwdplot(out, standard=list(labx="My test X-label"))  ## xlab     - OK
 resfwdplot(out, standard=list(laby="My test y-label"))  ## xlab     - OK
 
-resfwdplot(out, standard=list(LineStyle=c("--", "-.")))  ## cell array in the structure, does not work !!!
-resfwdplot(out, standard=list(Color=c("red", "blue")))   ## cell array in the structure, does not work !!!
+resfwdplot(out, standard=list(LineStyle=c("--", "-.")))  ## cell array in the structure, OK
+resfwdplot(out, standard=list(Color=c("red", "blue")))   ## cell array in the structure, OK
 
 ## 5. Example with HBK, optional parameters in the 'databrush' structure
 out <- fsreg(Y~., data=hbk, method="FS", monitoring=TRUE)
@@ -70,6 +61,7 @@ resfwdplot(out, databrush=list(labeladd='1'))       ## labeladd ='1'   OK
 ## 6. Example with HBK, optional parameters nameX, namey, tag, label, msg
 out <- fsreg(Y~., data=hbk, method="FS", monitoring=TRUE)
 
+## None of these seems to work ????
 resfwdplot(out, namey="My test Y name")                 ## namey: OK
 resfwdplot(out, nameX=c("Name 1", "NAme 2", "Name 3"))  ## nameX: string vector == matlab Cell array not yet supported !!!
 resfwdplot(out, datatooltip=1, label=c("Name 1", "Name 2", "Name 3"))  ## label: string vector == matlab Cell array not yet supported !!!
@@ -79,6 +71,7 @@ resfwdplot(out, msg=1)                                  ## msg: I cannot see the
 ## 7. Example with HBK, optional parameters in the 'datatooltip' structure
 out <- fsreg(Y~., data=hbk, method="FS", monitoring=TRUE)
 
+## Errors ???? none of these works
 resfwdplot(out, datatooltip=list(DisplayStyle="window"))        ## DisplayStyle - default OK
 resfwdplot(out, datatooltip=list(DisplayStyle="datatip"))       ## DisplayStyle - OK
 resfwdplot(out, datatooltip=list(SnapToDataVertex="on"))        ## SnapToDataVertex=on/off - OK
@@ -91,6 +84,7 @@ resfwdplot(out, datatooltip=list(LineColor=c("g")))             ## LineColor as 
 
 resfwdplot(out, datatooltip=list(SubsetLinesColor=c(0,1,0)))    ## SubsetLinesColor - seems not to work!!!
 
+## Exceptions - none of these works ????
 ## 8. Example with HBK, optional parameters in the 'bground' structure
 out <- fsreg(Y~., data=hbk, method="FS", monitoring=TRUE)
 
@@ -117,7 +111,6 @@ out <- fsreg(Y~., data=hbk, method="S", monitoring=TRUE)
 resfwdplot(out)
 
 ## 11. Test with HBK, optional parameters in the 'standard' structure
-detach(name="package:fsdaR", unload=TRUE)
 library(fsdaR)
 out <- fsreg(Y~., data=hbk, method="FS", monitoring=TRUE)
 
@@ -143,21 +136,16 @@ resfwdplot(out, cex.lab=2, cex.axis=2)
 resfwdplot(out, standard=list(SizeAxesNum=20))          ## cex.axis - OK
 resfwdplot(out, standard=list(SizeAxesLab=20))          ## cex.lab  - no error, but has no effect
 
-## xvalues: this will not work .....................
-## The default for xvalues is (dim(out$RES)[1]-dim(out$RES)[2]+1):dim(out$RES)[1]
-## Let is try to set it
-(dim(out$RES)[1]-dim(out$RES)[2]+1):dim(out$RES)[1]
-resfwdplot(out, xvalues=(dim(out$RES)[1]-dim(out$RES)[2]+1):dim(out$RES)[1])
-
 resfwdplot(out, lty=c("dotted", "dotdash"))     # OK
-resfwdplot(out, lty=3)                          # workaround - only one lemenet
+resfwdplot(out, lty=3)                          # workaround - only one elemenet    ????
 resfwdplot(out, lty=c(3, 4, 5))                 # warning
 
 ## testing the fground options
 resfwdplot(out, fg.thresh=1, fg.col="red", fg.lty=c("dotted", "dashed"), fg.lwd=2, fg.mark=TRUE)
 
 ## ---------------------------------------------------------------
-wool <- read.table("wool.txt")
+## 12. Test with wool
+data(wool)
 names(wool)[1:3] <- paste0("X", 1:3)
 names(wool)[4] <- "Y"
 out <- fsreg(Y~., data=wool, method="FS", monitoring=TRUE)

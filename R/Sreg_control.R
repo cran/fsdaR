@@ -54,7 +54,7 @@ Sregeda_control <- function(intercept=TRUE, bdp=seq(0.5, 0.01, -0.01),
 ##  MMreg_control
 ##
 ##  Creates an object of class MMreg_control to be used with the 'MMreg' function,
-##  containing various control parameters. Used To call the MATLAB function 'MMreg'.
+##  containing various control parameters. Used to call the MATLAB function 'MMreg'.
 ##
 ##  - 'plots' should not be seen by the R user - always 0, but currently it is included.
 ##  - 'intercept' can be changed later by the R 'fsreg' function called - depending on the formula

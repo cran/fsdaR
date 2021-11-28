@@ -114,8 +114,8 @@ tclustICplot <- function(out, whichIC=c("ALL", "MIXMIX", "MIXCLA", "CLACLA"),
     whichIC = match.arg(whichIC)
 
     ## Perform check on the structure of 'out'
-    if(missing(out) | !inherits(out, "tclustic"))
-        stop("Function defined only for output of tclustIC().")
+    if(missing(out) || !inherits(out, "tclustic") &&  !inherits(out, "tclustregic"))
+        stop("Function defined only for output of tclustIC() or tclustregIC().")
 
     if(out$whichIC != "ALL" & out$whichIC != whichIC)
         stop(paste0("The requested criteria (", whichIC, ") is not compatible with the input 'tclustIC.object' object (", out$whichIC, ")."))

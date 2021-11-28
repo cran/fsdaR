@@ -5,12 +5,27 @@
 \title{Performs cluster analysis by calling \code{\link{tclustfsda}} for different
  number of groups \code{k} and restriction factors \code{c}}
 \usage{
-tclustIC(x, kk = 1:5, cc = c(1, 2, 4, 8, 16, 32, 64, 128), alpha = 0,
-  whichIC = c("ALL", "MIXMIX", "MIXCLA", "CLACLA"), nsamp,
-  refsteps = 15, reftol = 1e-14, equalweights = FALSE, msg = TRUE,
-  nocheck = FALSE, plot = FALSE, startv1 = 1,
-  restrtype = c("eigen", "deter"), UnitsSameGroup, numpool, cleanpool,
-  trace = FALSE, ...)
+tclustIC(
+  x,
+  kk = 1:5,
+  cc = c(1, 2, 4, 8, 16, 32, 64, 128),
+  alpha = 0,
+  whichIC = c("ALL", "MIXMIX", "MIXCLA", "CLACLA"),
+  nsamp,
+  refsteps = 15,
+  reftol = 1e-14,
+  equalweights = FALSE,
+  msg = TRUE,
+  nocheck = FALSE,
+  plot = FALSE,
+  startv1 = 1,
+  restrtype = c("eigen", "deter"),
+  UnitsSameGroup,
+  numpool,
+  cleanpool,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{An n x p data matrix (n observations and p variables).

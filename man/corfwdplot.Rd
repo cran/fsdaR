@@ -9,7 +9,7 @@ corfwdplot(out, trace = FALSE, ...)
 \arguments{
 \item{out}{An object of S3 class returned by one of the estimation functions with the
  monitoring option selected (\code{monitoring=TRUE}):
- \code{\link{fsreda.object}}, \code{\link{sregeda.object}}, \code{\link{mmregeda.object}}
+ \code{\link{fsreda.object}}, \code{\link{sregeda.object}}, \code{\link{mmregeda.object}},
  \code{\link{fsmeda.object}}, \code{\link{smulteda.object}} or \code{\link{mmmulteda.object}}.
  This is a list containing the monitoring of minimum Mahalanobis distance in case of
  multivariate analysis or the monitoring of residuals in case of regression.

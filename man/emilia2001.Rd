@@ -4,7 +4,8 @@
 \name{emilia2001}
 \alias{emilia2001}
 \title{Demographic data from the 341 miniciplaities in Emilia Romagna (an Italian region).}
-\format{A data frame with 341 rows and 28 variables
+\format{
+A data frame with 341 rows and 28 variables
 The variables are as follows:
 
 \itemize{
@@ -39,7 +40,8 @@ The variables are as follows:
 }
 
  @references
- Atkinson, A. C., Riani, M., and Cerioli, A. (2004). \emph{Exploring Multivariate Data with the Forward Search}. Springer-Verlag, New York.}
+ Atkinson, A. C., Riani, M., and Cerioli, A. (2004). \emph{Exploring Multivariate Data with the Forward Search}. Springer-Verlag, New York.
+}
 \usage{
 data(emilia2001)
 }

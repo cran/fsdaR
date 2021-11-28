@@ -4,8 +4,17 @@
 \alias{smult}
 \title{Computes  S estimators in multivariate analysis}
 \usage{
-smult(x, monitoring = FALSE, plot = FALSE, bdp, nsamp,
-  conflev = 0.975, nocheck = FALSE, trace = FALSE, ...)
+smult(
+  x,
+  monitoring = FALSE,
+  plot = FALSE,
+  bdp,
+  nsamp,
+  conflev = 0.975,
+  nocheck = FALSE,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{An n x p data matrix (n observations and p variables).
@@ -39,9 +48,10 @@ If \code{nsamp=0} all subsets will be extracted. They will be
   \code{(n choose p)}. If the number of all possible subset is \code{<1000}
   the default is to extract all subsets otherwise just 1000.}
 
-\item{conflev}{confidence interval for the horizontal bands. It can be a vector of
-different confidence level values, e.g. c(0.95, 0.99, 0.999).
-The confidence interval is based on the chi^2 distribution.}
+\item{conflev}{Confidence level which is used to declare units as outliers (scalar).
+Usually \code{conflev=0.95}, \code{conflev=0.975} or \code{conflev=0.99} (individual alpha)
+\code{conflev=1-0.05/n}, \code{conflev=1-0.025/n} or \code{conflev=1-0.01/n} (simultaneous alpha).
+Default value is \code{convlev=0.975}.}
 
 \item{nocheck}{It controls whether to perform checks on matrix Y. If \code{nocheck=TRUE}, no check is performed.}
 

@@ -4,11 +4,29 @@
 \alias{tclustfsda}
 \title{Computes trimmed clustering with scatter restrictions}
 \usage{
-tclustfsda(x, k, alpha, restrfactor = 12, monitoring = FALSE,
-  plot = FALSE, nsamp, refsteps = 15, reftol = 1e-13,
-  equalweights = FALSE, mixt = 0, msg = TRUE, nocheck = FALSE,
-  startv1 = 1, restrtype = c("eigen", "deter"), UnitsSameGroup,
-  numpool, cleanpool, trace = FALSE, ...)
+tclustfsda(
+  x,
+  k,
+  alpha,
+  restrfactor = 12,
+  monitoring = FALSE,
+  plot = FALSE,
+  nsamp,
+  refsteps = 15,
+  reftol = 1e-13,
+  equalweights = FALSE,
+  mixt = 0,
+  msg = TRUE,
+  nocheck = FALSE,
+  startv1 = 1,
+  RandNumbForNini,
+  restrtype = c("eigen", "deter"),
+  UnitsSameGroup,
+  numpool,
+  cleanpool,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{An n x p data matrix (n observations and p variables).
@@ -25,7 +43,7 @@ tclustfsda(x, k, alpha, restrfactor = 12, monitoring = FALSE,
  traditional model based or mixture clustering (mclust): see for example the
  Matlab function \code{gmdistribution}.
 
- More in detail, if \code{0 < alpha < 1} clustering is based on \code{h = fix(n * (1-alpha))}
+ More in detail, if \code{0 < alpha < 1} clustering is based on \code{h = floor(n * (1-alpha))}
  observations, else if alpha is an integer greater than 1 clustering is based on \code{h = n - floor(alpha)}.
  If \code{monitoring=TRUE}, \code{alpha} is a vector which specifies the values of
  trimming levels which have to be considered - contains decresing elements which
@@ -198,6 +216,15 @@ on matrix \code{X}. The default \code{nocheck=FALSE}.}
 Remark 2 - option \code{startv1} is used just if \code{nsamp} is a scalar
  (see for more details the help associated with \code{nsamp}).}
 
+\item{RandNumbForNini}{pre-extracted random numbers to initialize proportions.
+Matrix of size k-by-nrow(nsamp) containing the random numbers which
+are used to initialize the proportions of the groups. This option is effective just if
+\code{nsamp} is a matrix which contains pre-extracted subsamples. The purpose of this
+option is to enable to user to replicate the results in case routine \code{tclustreg*()}
+is called using a parfor instruction (as it happens for example in routine IC, where
+\code{tclustreg()} is called through a parfor for different values of the restriction factor).
+The default is that \code{RandNumbForNini} is empty - then uniform random numbers are used.}
+
 \item{restrtype}{Type of restriction to be applied on the cluster scatter matrices.
 Valid values are \code{'eigen'} (default), or \code{'deter'}.
 \code{"eigen"} implies restriction on the eigenvalues while \code{"deter"}
@@ -287,6 +314,32 @@ This iterative algorithm initializes \code{k} clusters randomly and performs
  ##  Filled contour plots with additional options: contourf plot with autumn colormap
  plots <- list(type="contourf", cmap="autumn")
  out <- tclustfsda(geyser2, k=3, alpha=0.1, restrfactor=10000, plot=plots)
+ ##  Filled contour plots with additional options: contourf plot with a named colormap.
+ ##  Here we define four MATLAB-like colormaps, but the user can define anything else,
+ ##  presented by a matrix with three columns which are the RGB triplets.
+
+ summer <- as.matrix(data.frame(x1=seq(from=0, to=1, length=65),
+                                x2=seq(from=0.5, to=1, length=65),
+                                x3=rep(0.4, 65)))
+ spring <- as.matrix(data.frame(x1=rep(1, 65),
+                                x2=seq(from=0, to=1, length=65),
+                                x3=seq(from=1, to=0, length=65)))
+ winter <- as.matrix(data.frame(x1=rep(0, 65),
+                                x2=seq(from=0, to=1, length=65),
+                                x3=seq(from=1, to=0, length=65)))
+ autumn <- as.matrix(data.frame(x1=rep(1, 65),
+                                x2=seq(from=0, to=1, length=65),
+                                x3=rep(0, 65)))
+
+ out <- tclustfsda(geyser2, k=3, alpha=0.1, restrfactor=10000,
+       plot=list(type="contourf", cmap=autumn))
+ out <- tclustfsda(geyser2, k=3, alpha=0.1, restrfactor=10000,
+       plot=list(type="contourf", cmap=winter))
+ out <- tclustfsda(geyser2, k=3, alpha=0.1, restrfactor=10000,
+       plot=list(type="contourf", cmap=spring))
+ out <- tclustfsda(geyser2, k=3, alpha=0.1, restrfactor=10000,
+       plot=list(type="contourf", cmap=summer))
+
 
  ##  We compare the output using three different values of restriction factor
  ##      nsamp is the number of subsamples which will be extracted
@@ -406,7 +459,7 @@ This iterative algorithm initializes \code{k} clusters randomly and performs
 \references{
 Garcia-Escudero, L.A., Gordaliza, A., Matran, C. and Mayo-Iscar, A. (2008).
      A General Trimming Approach to Robust Cluster Analysis. Annals of Statistics,
-     Vol. 36, 1324-1345. [Technical Report available at: \url{http://www.eio.uva.es/inves/grupos/representaciones/trTCLUST.pdf}]
+     Vol. 36, 1324-1345. \doi{10.1214/07-AOS515}.
 }
 \author{
 FSDA team, \email{valentin.todorov@chello.at}

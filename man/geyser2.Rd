@@ -4,13 +4,15 @@
 \name{geyser2}
 \alias{geyser2}
 \title{Old Faithful Geyser Data.}
-\format{A data frame with 271 rows and 2 variables
+\format{
+A data frame with 271 rows and 2 variables
 The variables are as follows:
 
 \itemize{
   \item Eruption length: The eruption length in minutes.
   \item Previous eruption length: The length of the previous eruption in minutes.
-}}
+}
+}
 \usage{
 data(geyser2)
 }

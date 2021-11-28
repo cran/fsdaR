@@ -4,9 +4,21 @@
 \alias{fsmult}
 \title{Gives an automatic outlier detection procedure in multivariate analysis}
 \usage{
-fsmult(x, bsb, monitoring = FALSE, crit = c("md", "biv", "uni"),
-  rf = 0.95, init, plot = FALSE, bonflev, msg = TRUE,
-  nocheck = FALSE, scaled = FALSE, trace = FALSE, ...)
+fsmult(
+  x,
+  bsb,
+  monitoring = FALSE,
+  crit = c("md", "biv", "uni"),
+  rf = 0.95,
+  init,
+  plot = FALSE,
+  bonflev,
+  msg = TRUE,
+  nocheck = FALSE,
+  scaled = FALSE,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{An n x p data matrix (n observations and p variables).

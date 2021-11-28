@@ -39,7 +39,7 @@
 #' @param lwdenv line width: a scalar which controls the width of the lines associated
 #'  with the envelopes. Default is \code{lwdenv=1}
 #' @param tag Plot handle. String which identifies the handle of the plot which is about to be created.
-#'  The default is \code{tag='pl_mmd'}. Notice that if the program finds a plot which has
+#'  The default is \code{tag='pl_mmdrs'}. Notice that if the program finds a plot which has
 #'  a tag equal to the one specified by the user, then the output of the new plot overwrites
 #'  the existing one in the same window else a new window is created.
 #'
@@ -141,9 +141,9 @@ mmdrsplot <- function(out,
     if(!missing(envm))
         control$envm <- envm
     if(!missing(xlim))
-        control$xlimx <- xlim
+        control$xlimx <- as.double(xlim)    # MATLAB does not want them as integer
     if(!missing(ylim))
-        control$ylimy <- ylim
+        control$ylimy <- as.double(ylim)    # MATLAB does not want them as integer
     if(!missing(lwd))
         control$lwd <- lwd
     if(!missing(lwdenv))

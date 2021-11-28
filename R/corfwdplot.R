@@ -14,7 +14,7 @@
 #'
 #' @param out An object of S3 class returned by one of the estimation functions with the
 #'  monitoring option selected (\code{monitoring=TRUE}):
-#'  \code{\link{fsreda.object}}, \code{\link{sregeda.object}}, \code{\link{mmregeda.object}}
+#'  \code{\link{fsreda.object}}, \code{\link{sregeda.object}}, \code{\link{mmregeda.object}},
 #'  \code{\link{fsmeda.object}}, \code{\link{smulteda.object}} or \code{\link{mmmulteda.object}}.
 #'  This is a list containing the monitoring of minimum Mahalanobis distance in case of
 #'  multivariate analysis or the monitoring of residuals in case of regression.
@@ -72,6 +72,17 @@
 
 corfwdplot <- function(out, trace=FALSE, ...)
 {
+
+## Change the color of the strips to a lighter one, otherwise
+##  labels are not enough visible
+theme_mybw <- function(base_size = 11, base_family = "sans")
+{
+    theme_bw(base_size = base_size, base_family = base_family) %+replace%
+        theme(strip.background = element_rect(fill = "grey96", colour = "grey20"),
+              complete = TRUE)
+}
+
+
     ## Perform check on the structure of 'out'
     if(missing(out) | !(inherits(out, "fsmeda") | inherits(out, "smulteda") | inherits(out, "mmmulteda") |
                         inherits(out, "fsreda") | inherits(out, "sregeda") | inherits(out, "mmregeda")))
@@ -109,7 +120,7 @@ corfwdplot <- function(out, trace=FALSE, ...)
     }
 
     RHO = matrix(NA, nrow=nsteps-1, ncol=3)
-    colnames(RHO) <- c("Spearman", "Kendal", "Pearson")
+    colnames(RHO) <- c("Spearman", "Kendall", "Pearson")
 
     for(i in 1:(nsteps-1))
     {
@@ -133,7 +144,7 @@ corfwdplot <- function(out, trace=FALSE, ...)
 ##    rho <- melt(RHO, id.vars="x", variable.name = "z", value.name="y")
 
     RHO <- cbind.data.frame(x=x, RHO)
-    lvl <- c("Spearman", "Kendal", "Pearson")
+    lvl <- c("Spearman", "Kendall", "Pearson")
     rho <- reshape(RHO, varying=lvl, v.names = "y", idvar="x", timevar = "z", times = lvl,
         new.row.names=1:(length(lvl) * nrow(RHO)), direction = "long")
     rho$z <- factor(rho$z, levels=lvl)
@@ -141,7 +152,7 @@ corfwdplot <- function(out, trace=FALSE, ...)
     p <- ggplot(data=rho, aes(x=x, y=y)) +
          geom_line() + facet_grid(z~., scales="free") +
          labs(x=xlab, y="Correlation") +
-         theme_light(base_family="sans")
+         theme_mybw(base_family="sans")
 
          if(class(out) == "smulteda" | class(out) == "sregeda"){
             p <- p + scale_x_reverse() + ylim(ylimits)

@@ -1,30 +1,34 @@
-# Export all names
-## exportPattern("^[[:alpha:]]+")
-
 export(fsreg,
     FSR_control, FSReda_control, Sreg_control, Sregeda_control, MMreg_control, MMregeda_control, LXS_control,
     resfwdplot, mdrplot, resindexplot, levfwdplot,
+    fsrfan,
     fsmult, smult, mmmult,
     malfwdplot, mmdplot, malindexplot, corfwdplot,
     fsmmmdrs, mmdrsplot,
-    tclustfsda, tclustIC, tclustICsol, tclustICplot, carbikeplot
+    tclustfsda, tclustIC, tclustICsol, tclustICplot, carbikeplot,
+    tclustreg, #tclustregIC,
+    spmplot, regspmplot, covplot #, saveas
     )
-
-importFrom("stats", "pf", "printCoefmat", "pt", "quantile")
 
 # Import all packages listed as Imports or Depends
 importFrom(stats4, plot, summary)
 importFrom(methods, show)
+importFrom("stats", "pf", "printCoefmat", "pt", "quantile")
 importFrom("stats", ".getXlevels", "coef", "is.empty.model",
          "model.matrix", "model.offset", "model.response",
          "model.weights", "cor", "reshape")
-importFrom("ggplot2", "ggplot", "aes", "geom_line", "facet_grid", "labs", "scale_x_reverse", "ylim", "theme_light")
+importFrom("utils", "flush.console")
+importFrom("ggplot2", "ggplot", "aes", "geom_line", "facet_grid", "labs",
+        "scale_x_reverse", "ylim", "theme", "theme_light",  "theme_bw",
+        "%+replace%", "element_rect")
 import(
   rrcov,
   rJava
 )
 
 ##S3 methods
+S3method(fsrbase, default)
+S3method(fsrbase, formula)
 S3method(fsreg, default)
 S3method(fsreg, formula)
 S3method(print, fsr)

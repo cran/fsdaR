@@ -27,7 +27,7 @@ fsreg(x, \dots)
 \method{fsreg}{default}(x, y, bsb, intercept = TRUE, 
         family = c("homo", "hetero", "bayes"),
 		method = c("FS", "S", "MM", "LTS", "LMS"),
-        monitoring = FALSE, control, 
+        monitoring = FALSE, control, trace = FALSE,
         \dots) 
 }
 
@@ -109,11 +109,11 @@ fsreg(x, \dots)
     a model with constant term will be fitted (default), else, 
     no constant term will be included.
 }
-  \item{control}{ A control object (SS) containing estimation options. If the 
+  \item{control}{ A control object (S3) containing estimation options. If the 
     control object is supplied, the parameters from it
     will be used. If parameters are passed also in the invocation statement, 
     they will override the corresponding elements of the control object.}
-
+\item{trace}{Whether to print intermediate results. Default is \code{trace=FALSE}.}
 \item{\dots}{
     potential further arguments passed to lower level functions.
 }

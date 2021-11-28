@@ -4,9 +4,29 @@
 \alias{mmdrsplot}
 \title{Plots the trajectories of minimum Mahalanobis distances from different starting points}
 \usage{
-mmdrsplot(out, quant = c(0.01, 0.5, 0.99), envm, lwd, lwdenv, xlim, ylim,
-  tag, datatooltip, label, xlab, ylab, envlab = TRUE, main, nameX,
-  cex.lab, cex.axis, databrush, scaled = FALSE, trace = FALSE, ...)
+mmdrsplot(
+  out,
+  quant = c(0.01, 0.5, 0.99),
+  envm,
+  lwd,
+  lwdenv,
+  xlim,
+  ylim,
+  tag,
+  datatooltip,
+  label,
+  xlab,
+  ylab,
+  envlab = TRUE,
+  main,
+  nameX,
+  cex.lab,
+  cex.axis,
+  databrush,
+  scaled = FALSE,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{out}{An object of S3 class \code{\link{fsmmmdrs.object}} returned by
@@ -45,7 +65,7 @@ minimum and maximum on the x axis. Default is to use automatic scale.}
 minimum and maximum on the y axis. Default is to use automatic scale.}
 
 \item{tag}{Plot handle. String which identifies the handle of the plot which is about to be created.
-The default is \code{tag='pl_mmd'}. Notice that if the program finds a plot which has
+The default is \code{tag='pl_mmdrs'}. Notice that if the program finds a plot which has
 a tag equal to the one specified by the user, then the output of the new plot overwrites
 the existing one in the same window else a new window is created.}
 

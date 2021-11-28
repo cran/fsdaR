@@ -10,44 +10,49 @@
 ##      by the model, x.ret and y.ret parameters.
 ##
 FSR_control <- function(intercept=TRUE, h, nsamp=1000, lms=1, init,
-    nocheck=FALSE, bonflev='', msg=TRUE, bsbmfullrank=1,
+    nocheck=FALSE, bonflev='', msg=TRUE, bsbmfullrank=TRUE,
     plot=FALSE,
-    bivarfit, multivarfit, labeladd=FALSE, nameX, namey, ylim, xlim)
+    bivarfit=FALSE, multivarfit=FALSE,
+    labeladd=FALSE, nameX, namey, ylim, xlim)
 {
     ctrl <- list(intercept=ifelse(intercept, 1, 0), nsamp = nsamp, lms=lms,
-        nocheck=ifelse(nocheck, 1, 0), bonflev=bonflev, msg=mapMessage(msg), bsbmfullrank=bsbmfullrank,
+        nocheck=ifelse(nocheck, 1, 0), bonflev=bonflev, msg=mapMessage(msg),
+        bsbmfullrank=ifelse(bsbmfullrank, "1", ""),
         plots=ifelse(plot, 1, 0),
-        labeladd=ifelse(labeladd, 1, ""), outclass="fsr")
+        labeladd=ifelse(labeladd, "1", ""), outclass="fsr")
 
-    if(!missing(bivarfit))
+    if(bivarfit == "")
+        xxx=0 # accept but do nothing
+    else if(bivarfit %in% c("0", "1", "2", "i1", "i2", "i3"))
+        ctrl$bivarfit <- bivarfit
+    else if(is.logical(bivarfit))
     {
-        if(bivarfit %in% c("", "0", "1", "2", "i1", "i2", "i3"))
-            ctrl$bivarfit <- bivarfit
-        else if(is.logical(bivarfit))
-            ctrl$bivarfit <- ifelse(bivarfit, '1', '')
-        else if(is.numeric(bivarfit))
-            if(bivarfit>=0 & bivarfit<=2)
-                ctrl$bivarfit <- as.character(bivarfit)
-            else
-                stop("Wrong value for argument 'bivarfit': can be TRUE/FALSE or 1 or 2")
+        if(bivarfit)
+            ctrl$bivarfit <- '1'
+    }
+    else if(is.numeric(bivarfit))
+        if(bivarfit>=0 & bivarfit<=2)
+            ctrl$bivarfit <- as.character(bivarfit)
         else
             stop("Wrong value for argument 'bivarfit': can be TRUE/FALSE or 1 or 2")
-    }
+    else
+        stop("Wrong value for argument 'bivarfit': can be TRUE/FALSE or 1 or 2")
 
-    if(!missing(multivarfit))
+    if(multivarfit == "")
+        xxx=0   # accept but do nothing
+    else if(multivarfit %in% c("0", "1", "2"))
+        ctrl$multivarfit <- multivarfit
+    else if(is.logical(multivarfit))
     {
-        if(multivarfit %in% c("", "1"))
-            ctrl$multivarfit <- multivarfit
-        else if(is.logical(multivarfit))
-            ctrl$multivarfit <- ifelse(multivarfit, '1', '')
-        else if(is.numeric(multivarfit))
-            if(multivarfit>=0 & multivarfit<=1)
-                ctrl$multivarfit <- as.character(multivarfit)
-            else
-                stop("Wrong value for argument 'multivarfit': can be TRUE/FALSE or 1")
+        if(multivarfit)
+            ctrl$multivarfit <- '1'
+    } else if(is.numeric(multivarfit))
+        if(multivarfit >= 0 & multivarfit <= 2)
+            ctrl$multivarfit <- as.character(multivarfit)
         else
-            stop("Wrong value for argument 'multivarfit': can be TRUE/FALSE or 1")
-    }
+            stop("Wrong value for argument 'multivarfit': can be TRUE/FALSE, 1 or 2")
+    else
+        stop("Wrong value for argument 'multivarfit': can be TRUE/FALSE, 1 or 2")
 
     if(!missing(h))
         ctrl$h <- h
@@ -124,7 +129,7 @@ LXS_control <- function(intercept=TRUE, lms, h, bdp, nsamp, rew=FALSE,
     structure(ctrl, class = "LTSreg_control")
 }
 
-.defaultControl <- function(monitoring=FALSE, family = c("homo", "hetero", "bayes", "mult"), method = c("FS", "S", "MM", "LTS", "LMS"))
+.defaultControl <- function(monitoring=FALSE, family = c("homo", "hetero", "bayes", "mult"), method = c("FS", "S", "MM", "LTS", "LMS"), ...)
 {
     family <- match.arg(family)
     method <- match.arg(method)
@@ -148,7 +153,7 @@ LXS_control <- function(intercept=TRUE, lms, h, bdp, nsamp, rew=FALSE,
         if(method=="FS")
         {
             if(family=="homo")
-                res <- if(!monitoring) FSR_control() else FSReda_control()
+                res <- if(!monitoring) FSR_control(...) else FSReda_control(...)
             else
                 stop("Families 'hetero' and 'bayes' not yet implemented")
 
@@ -169,6 +174,32 @@ LXS_control <- function(intercept=TRUE, lms, h, bdp, nsamp, rew=FALSE,
             stop(paste("Undefined method: ", method))
     }
     res
+}
+
+## If the control object 'cotrol' is not missing, add to it the parameters
+##  passed on the function call (in the dots). Otherwise create a new control object
+##  passing it the optional parameters.
+.setControl <- function(monitoring, family, method, control, ...)
+{
+    ## 'mycontrol' contains all default parameters plus those that were passed on the function call (in the dots).
+    mycontrol <- .defaultControl(monitoring, family, method, ...)
+    if(missing(control))
+        return(mycontrol)
+
+    if(class(control) != class(mycontrol))
+        stop(paste0("Wrong control object provided - if supplied, the control object must be of class ", class(mycontrol), "!"))
+
+    ## A control object wa supplied and we want to override those element that were passed on the function call.
+    ##  First delete from 'mycontrol' all elements that are default
+    tempcontrol <- .defaultControl(monitoring, family, method)  # a control object with all default elements
+    for(xname in names(tempcontrol))
+        if(identical(tempcontrol[[xname]], mycontrol[[xname]]))
+            mycontrol[[xname]] <- NULL
+
+    ## Now copy the remaining (those passed on the fucntion call) to the control object and return it.
+    for(xname in names(mycontrol))
+        control[[xname]] <- mycontrol[[xname]]
+    return(control)
 }
 
 mapMessage <- function(msg)

@@ -4,8 +4,19 @@
 \alias{malindexplot}
 \title{Plots the trajectory of minimum Mahalanobis distance (mmd)}
 \usage{
-malindexplot(out, p, xlab, ylab, main, nameX, conflev, trace = FALSE,
-  ...)
+malindexplot(
+  out,
+  p,
+  xlab,
+  ylab,
+  main,
+  nameX,
+  conflev,
+  numlab,
+  tag,
+  trace = FALSE,
+  ...
+)
 }
 \arguments{
 \item{out}{a numeric vector or an object of S3 class (one of \code{\link{fsmult.object}},
@@ -14,7 +25,8 @@ one of the functions
 \code{\link{fsmult}} or \code{\link{smult}} or \code{\link{mmmult}} -
 a list containing the monitoring of minimum Mahalanobis distance}
 
-\item{p}{If \code{out} is a vector, p is its length (i.e. number of variables).}
+\item{p}{If \code{out} is a vector, p is the number of variables of the
+original data matrix which have been used to compute md.}
 
 \item{xlab}{A title for the x axis}
 
@@ -29,6 +41,14 @@ If it is empty (default) the sequence \code{X1, ..., Xp} will be created automat
 \item{conflev}{confidence interval for the horizontal bands. It can be a vector of
 different confidence level values, e.g. c(0.95, 0.99, 0.999).
 The confidence interval is based on the chi^2 distribution.}
+
+\item{numlab}{Number of points to be labeled in the plot. If \code{numlab} is a
+single number, e.g. \code{numlab]k}, the units with the \code{k} largest
+md are labelled in the plots. If \code{numlab} is a vector, the units indexed
+by the vector are labelled in the plot. Default is \code{numlab=5}, i.e. the 5 units
+units with the largest md are labelled. Use \code{numlab=""} for no labelling.}
+
+\item{tag}{Tag of the figure which will host the malindexplot. The default tag is \code{tag="pl_malindex"}.}
 
 \item{trace}{Whether to print intermediate results. Default is \code{trace=FALSE}.}
 

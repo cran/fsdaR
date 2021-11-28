@@ -26,7 +26,7 @@ plot(CovClassic(Y), which="pairs", col=group, main='Two simulated groups')
 ##  The number of workers which is used is the one specified
 ##  in the local/current profile
 
-out <- fsmmmdrs(Y, nsimul=100, init=10, plot=TRUE);
+out <- fsmmmdrs(Y);
 
 cat("\nThe two peaks in the trajectories of minimum Mahalanobis distance (mmd).\n",
     "clearly show the presence of two groups.\n",

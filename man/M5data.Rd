@@ -4,11 +4,13 @@
 \name{M5data}
 \alias{M5data}
 \title{Mixture M5 Data.}
-\format{A data frame with 2000 rows and 3 variables
-The first two columns are the two variables. The last column is the true classification vector where symbol "0" stands for the contaminating data points.}
+\format{
+A data frame with 2000 rows and 3 variables
+The first two columns are the two variables. The last column is the true classification vector where symbol "0" stands for the contaminating data points.
+}
 \source{
 Garcia-Escudero, L.A., Gordaliza, A., Matran, C. and Mayo-Iscar, A. (2008). A General Trimming Approach to Robust Cluster Analysis,
-     \emph{Annals of Statistics}, Vol.\strong{36}, 1324-1345. Technical report available at \url{http://www.eio.uva.es/inves/grupos/representaciones/trTCLUST.pdf}
+     \emph{Annals of Statistics}, Vol.\strong{36}, 1324-1345. \doi{10.1214/07-AOS515}.
 }
 \usage{
 data(M5data)
