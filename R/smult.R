@@ -71,7 +71,7 @@
 #' @examples
 #'
 #'  \dontrun{
-#'  data(hbk)
+#'  data(hbk, package="robustbase")
 #'  (out <- smult(hbk[,1:3]))
 #'  class(out)
 #'  summary(out)
@@ -127,6 +127,7 @@ smult <- function(x, monitoring = FALSE, plot=FALSE, bdp, nsamp,
 	    x <- matrix(x, length(x), 1,
 			dimnames = list(names(x), deparse(substitute(x))))
     if(!is.numeric(x)) stop("x is not a numeric")
+    storage.mode(x) <- "double"
 
     dx <- dim(x)
     xn <- (dnx <- dimnames(x))[[2]]

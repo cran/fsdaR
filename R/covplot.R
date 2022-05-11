@@ -209,7 +209,7 @@ covplot <- function(out, xlim, ylim, xlab, ylab, main,
 
     if(trace)
     {
-        cat("\nOptional parameters to FSM(): \n")
+        cat("\nOptional parameters to covplot(): \n")
         print(control)
     }
 
@@ -228,7 +228,7 @@ covplot <- function(out, xlim, ylim, xlab, ylab, main,
     matlabParams <- parlist
     matlabResult <- callFsdaFunctionNoArgout("covplot", "[Ljava/lang/Object;", matlabParams)
     ans = list()
-    freeMatlabResources(out)
+    freeMatlabResources(matlabResult)
 
     return(invisible(ans))
 }

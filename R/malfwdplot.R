@@ -360,7 +360,7 @@ malfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
 
     if(trace)
     {
-        cat("\nOptional parameters to FSM(): \n")
+        cat("\nOptional parameters to malfwdplot(): \n")
         print(control)
     }
 
@@ -402,7 +402,7 @@ malfwdplot <- function(out, xlim, ylim, xlab, ylab, main,
     ans = list()
 
     # Libera le risorse MATLAB create a runtime
-    freeMatlabResources(out)
+    freeMatlabResources(matlabResult)
 
     return(invisible(ans))
 }

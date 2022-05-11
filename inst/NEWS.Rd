@@ -4,9 +4,25 @@
 \title{News for \R Package \pkg{fsdaR}}
 \encoding{UTF-8}
 
+\section{CHANGES in fsdaR VERSION 0.7-0 (2022-04-10)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+        \item Updated with the new version of FSDA
+        \item Added formula interface and plot function for fsrfan()
+        \item Added a vignette (Robust transformations in regression)
+        \item  Removed the dependence on rrcov and replaced by 'suggest'
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+        \item Tests and corrections of fsrfan()
+    }
+  }
+}
 \section{CHANGES in fsdaR VERSION 0.6-5 (2021-11-24)}{
   \subsection{NEW FEATURES}{
     \itemize{
+        \item Added a new function: fsrfan()
         \item Added new dataset(s): poison, flea
         \item Fixed a bug in tclustICsol.R (alpha was not passed to the output object)
         \item Updated to the most recent version of MCR: R2021a (V910)

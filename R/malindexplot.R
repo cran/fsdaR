@@ -77,7 +77,7 @@ malindexplot <- function(out, p, xlab, ylab, main, nameX, conflev,
 
     if(is.list(out))
     {
-        if(class(out) == "fsm" | class(out) == "smult" | class(out) == "mmmult")
+        if(is(out, "fsm") | is(out, "smult") | is(out, "mmmult"))
         {
             ## The needed elements are mahalanobis distances, md and number of variables p.
             ##  The R class name is mapped to a Matlab class name
@@ -194,7 +194,7 @@ if(FALSE)
 
     if(trace)
     {
-        cat("\nOptional parameters to FSM(): \n")
+        cat("\nOptional parameters to malindexplot(): \n")
         print(control)
     }
 
@@ -230,7 +230,7 @@ if(FALSE)
     ans = list()
 
     # Libera le risorse MATLAB create a runtime
-    freeMatlabResources(out)
+    ##  freeMatlabResources(out)
 
     return(invisible(ans))
 }

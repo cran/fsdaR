@@ -112,7 +112,7 @@
 
 #' @examples
 #'  \dontrun{
-#'  data(hbk)
+#'  data(hbk, package="robustbase")
 #'  out <- fsmmmdrs(hbk[,1:3])
 #'  mmdrsplot(out)
 #'  }
@@ -198,7 +198,7 @@ mmdrsplot <- function(out,
 
     if(trace)
     {
-        cat("\nOptional parameters to FSM(): \n")
+        cat("\nOptional parameters to mmdrsplot(): \n")
         print(control)
     }
 
@@ -225,9 +225,10 @@ mmdrsplot <- function(out,
     }
 
     matlabParams <- parlist
-    matlabResult <- callFsdaFunctionNoArgout("mmdrsplot", "[Ljava/lang/Object;", matlabParams)
+    matlabResult <- callFsdaFunction("mmdrsplot", "[Ljava/lang/Object;", 2, matlabParams)
+    #callFsdaFunctionNoArgout("mmdrsplot", "[Ljava/lang/Object;", matlabParams)
     ans = list()
 
-    freeMatlabResources(out)
+    freeMatlabResources(matlabResult)
     return(invisible(ans))
 }
