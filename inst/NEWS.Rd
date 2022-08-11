@@ -4,7 +4,23 @@
 \title{News for \R Package \pkg{fsdaR}}
 \encoding{UTF-8}
 
-\section{CHANGES in fsdaR VERSION 0.7-0 (2022-04-10)}{
+\section{CHANGES in fsdaR VERSION 0.8-0 (2022-05-13)}{
+  \subsection{NEW FEATURES}{
+    \itemize{
+        \item Updated with the last version of MCR (9.12=R2022a)
+        \item Function score() added
+        \item New data sets added: forbes, hospital, bank_data, multiple_regression, Income1, Income2
+    }
+  }
+  \subsection{BUG FIXES}{
+    \itemize{
+        \item Parameter Soptions removed from MMreg_control, Smsg added
+        \item TODO: add all the other S options (starting with S)
+        \item Fix an issue in tclust in the case when number of estimated clusters is smaller than k
+    }
+  }
+}
+\section{CHANGES in fsdaR VERSION 0.7-0 (2022-05-11)}{
   \subsection{NEW FEATURES}{
     \itemize{
         \item Updated with the new version of FSDA
@@ -16,6 +32,7 @@
   \subsection{BUG FIXES}{
     \itemize{
         \item Tests and corrections of fsrfan()
+        \item fixed errors of the type "Found if() conditions comparing class() to string:"
     }
   }
 }

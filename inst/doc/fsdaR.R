@@ -10,9 +10,8 @@
 ## ##  Compute the score test using the five most common values of the
 ## ##  transformation parameter lambda
 ## 
-## ## only the last two steps
-## out <- fsrfan(cycles~., data=wool, init=nrow(wool)-1) 
-## out$Score[nrow(out$Score), -1]
+## out <- score(cycles~., data=wool)
+## out$Score
 ## 
 
 
@@ -24,10 +23,9 @@
 ## 
 ## ## la is a vector containing the values of \lambda which have to be tested
 ## 
-## ## only the last two steps
-## out <- fsrfan(amount_spent~., data=loyalty, 
-##               la=c(0.25, 1/3, 0.4, 0.5), init=nrow(loyalty)-1)   
-## out$Score[nrow(out$Score), -1]
+## out <- score(amount_spent~., data=loyalty,
+##               la=c(0.25, 1/3, 0.4, 0.5))
+## out$Score
 ## 
 
 
@@ -59,8 +57,8 @@
 ## xtab <- cbind(as.numeric(rownames(xtab)), xtab, largest)
 ## colnames(xtab)[1] <- "Step"
 ## colnames(xtab)[ncol(xtab)] <- "Largest Obs."
-## print(xtable(tail(xtab), digits=0,  
-##     caption="The last six observations that enter the model. The last column shows the six largest observations.", 
+## print(xtable(tail(xtab), digits=0,
+##     caption="The last six observations that enter the model. The last column shows the six largest observations.",
 ##     label="tab:ex-1"), include.rownames=FALSE)
 ## 
 
@@ -116,15 +114,15 @@
 ### code chunk number 8: ex-4a-compute (eval = FALSE)
 ###################################################
 ## 
-## ##  Example 4a: modified poison data (four observations 
+## ##  Example 4a: modified poison data (four observations
 ## ##  are changed) with the reciprocal transformation
 ## poison$Y <- poison$Y ^ (-1)
 ## set.seed(1234)
 ## out4a <- fsreg(Y~.-1, data=poison, method="LMS", msg=FALSE)
-## out4a <- fsreg(Y~.-1, data=poison, monitoring=TRUE, 
+## out4a <- fsreg(Y~.-1, data=poison, monitoring=TRUE,
 ##           lms=out4a.bs, msg=FALSE)
 ## 
-## ##  Monitoring the scaled residuals: a label is written 
+## ##  Monitoring the scaled residuals: a label is written
 ## ##  for the residuals greater than 2
 ## resfwdplot(out4a, fg.thresh=2)
 
@@ -133,8 +131,8 @@
 ### code chunk number 9: ex-4b-compute (eval = FALSE)
 ###################################################
 ## 
-## ##  Example 4b: automatic outlier detection for the 
-## ##  modified poison data (four observations are changed) 
+## ##  Example 4b: automatic outlier detection for the
+## ##  modified poison data (four observations are changed)
 ## ##  with the reciprocal transformation
 ## 
 ## set.seed(1234)

@@ -116,7 +116,7 @@ flush(stderr()); flush(stdout())
 
 
 
-VT::13.11.2021 - this usually takes to long - lets jump over it ...
+## VT::13.11.2021 - this usually takes to long - lets jump over it ...
 if(FALSE)
 {
 nameEx("Sregeda_control")
@@ -138,7 +138,7 @@ flush(stderr()); flush(stdout())
 }
 
 
-VT::13.11.2021 - it is very slow, also carbikeplot() throws an error, have to invetigate it...
+## VT::13.11.2021 - it is very slow, also carbikeplot() throws an error, have to invetigate it...
 if(FALSE)
 {
 
@@ -674,7 +674,7 @@ flush(stderr()); flush(stdout())
 
 
 
-VT::13.11.2021 - we still have the bug in fsmmmdrs and related functions - Unrecognized function or variable 'progbar'.
+##  VT::13.11.2021 - we still have the bug in fsmmmdrs and related functions - Unrecognized function or variable 'progbar'.
 if(FALSE)
 {
 
@@ -1234,7 +1234,7 @@ head(swissheads)
 plot(CovMcd(swissheads), which="pairs")
 
 
-VT::13.11.2021 - this takes too long...
+## VT::13.11.2021 - this takes too long...
 if(FALSE)
 {
 
