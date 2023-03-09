@@ -2,7 +2,7 @@
 ##  VT::17.12.2018
 ##
 ##
-##  roxygen2::roxygenise("C:/projects/statproj/R/fsdaR")
+##  roxygen2::roxygenise("C:/users/valen/onedrive/myrepo/R/fsdaR", load_code=roxygen2:::load_installed)
 ##
 #' Produces the carbike plot to find best relevant clustering solutions obtained by \code{\link{tclustICsol}}
 #'
@@ -108,7 +108,7 @@ carbikeplot <- function(out, SpuriousSolutions=FALSE,
     }
 
     matlabParams <- parlist
-    out <- callFsdaFunction("carbikeplot", "[Ljava/lang/Object;", 1, parlist)
+    out <- callFsdaFunction("carbikeplot", "[Ljava/lang/Object;", 1, matlabParams)
     ans = list()
 
     freeMatlabResources(out)
