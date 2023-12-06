@@ -1,8 +1,8 @@
 Package: fsdaR
 Title: Robust Data Analysis Through Monitoring and Dynamic
         Visualization
-Version: 0.8-1
-VersionNote: Released 0.8-0 on 2022-08-11 on CRAN
+Version: 0.9-0
+VersionNote: Released 0.8-1 on 2023-03-09 on CRAN
 Authors@R: c(person("Valentin", "Todorov", role = c("aut", "cre"), email = "valentin.todorov@chello.at", comment=c(ORCID = "0000-0003-4215-0245"))
          , person("Emmanuele", "Sordini", role = "aut", email = "Emmanuele.sordini@ec.europa.eu")
          , person("Aldo", "Corbellini", role = "ctb")
@@ -33,7 +33,7 @@ LazyData: yes
 License: GPL (>= 3)
 URL: https://github.com/UniprJRC/fsdaR
 BugReports: https://github.com/UniprJRC/fsdaR/issues
-Packaged: 2023-03-09 19:36:05 UTC; valen
+Packaged: 2023-12-05 21:23:26 UTC; valen
 Author: Valentin Todorov [aut, cre] (<https://orcid.org/0000-0003-4215-0245>),
   Emmanuele Sordini [aut],
   Aldo Corbellini [ctb],
@@ -44,5 +44,5 @@ Author: Valentin Todorov [aut, cre] (<https://orcid.org/0000-0003-4215-0245>),
 Maintainer: Valentin Todorov <valentin.todorov@chello.at>
 NeedsCompilation: no
 Repository: CRAN
-RoxygenNote: 7.2.2
-Date/Publication: 2023-03-09 21:00:05 UTC
+RoxygenNote: 7.2.3
+Date/Publication: 2023-12-06 03:40:02 UTC
